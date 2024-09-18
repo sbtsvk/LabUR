@@ -1,3 +1,4 @@
+create database mascotas;
 use mascotas;
 
 create table mascota
@@ -29,8 +30,15 @@ create table producto
     marca VARCHAR(15),
     precio FLOAT,
     cedulaClienteFK INT(11),
-    PRIMARY KEY (codigoProducto),
-    FOREIGN KEY (cedulaClienteFK) REFERENCES cliente(cedulaCliente)
+    PRIMARY KEY (codigoProducto)
+);
+
+create table producto_cliente
+(
+	codigoProductoFK INT(11) NOT NULL,
+    cedulaClienteFK INT(11) NOT NULL,
+    FOREIGN KEY (cedulaClienteFK) REFERENCES cliente(cedulaCliente),
+    FOREIGN KEY (codigoProductoFK) REFERENCES producto(codigoProducto)
 );
 
 create table vacuna
@@ -51,5 +59,26 @@ create table mascota_vacuna
     FOREIGN KEY (idMascotaFK) REFERENCES mascota(idMascota)
 );
 
-ALTER TABLE mascota
-RENAME COLUMN cantidad TO cantidadMascota;
+select * from mascota;
+
+insert into mascota values(1,'G','M','Pitbull',1),(2,'Lalo','M','Criollo',1),(3,'Lola','F','Terrier',1);
+
+insert into vacuna values(1,'Nobivac','1mL','Rabia'),(2,'Parvigen','1mL','Parvovirus/Moquillo'),(3,'Imovax','1mL','Rabia');
+
+insert into mascota values(4,'Erebus','M','Labrador',1),(5,'Abraxas','M','Criollo',1),(6,'Gojira','F','Bull Terrier',1);
+
+describe cliente;
+
+-- insert into cliente();
+
+-- insert into producto values();
+
+-- SELECT 
+--     CONSTRAINT_NAME 
+-- FROM 
+--     information_schema.KEY_COLUMN_USAGE 
+-- WHERE 
+--     TABLE_NAME = 'producto' 
+--     AND TABLE_SCHEMA = 'mascotas';
+-- ALTER TABLE producto DROP FOREIGN KEY producto_ibfk_1;
+-- ;
