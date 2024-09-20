@@ -17,7 +17,7 @@ create table cliente
     nombreCliente VARCHAR(15),
     apellidoCliente VARCHAR(15),
     direccionCliente VARCHAR(15),
-    telefono VARCHAR(20),
+    telefono INT(10),
     idMascotaFK INT(10),
     PRIMARY KEY (cedulaCliente),
     FOREIGN KEY (idMascotaFK) REFERENCES mascota(idMascota)
@@ -60,10 +60,9 @@ create table mascota_vacuna
     FOREIGN KEY (idMascotaFK) REFERENCES mascota(idMascota)
 );
 
-ALTER TABLE cliente ADD COLUMN telefonoPrefijo VARCHAR(4);
-ALTER TABLE cliente MODIFY COLUMN telefonoPrefijo VARCHAR(4) AFTER direccionCliente;
-
 select * from mascota;
+
+insert into mascota_vacuna values(1,1,'Rabia'),(1,2,'Rabia'),(1,3,'Rabia'),(1,4,'Rabia'),(2,1,'Moquillo'),(2,3,'Moquillo'),(2,2,'Moquillo');
 
 insert into mascota values(1,'G','M','Pitbull',1),(2,'Lalo','M','Criollo',1),(3,'Lola','F','Terrier',1);
 
@@ -73,4 +72,24 @@ insert into mascota values(7,'Tony','M','French Poodle',1),(8,'Tony Grande','Sam
 
 insert into mascota values(4,'Erebus','M','Labrador',1),(5,'Abraxas','M','Criollo',1),(6,'Gojira','F','Bull Terrier',1);
 
+describe cliente;
+describe mascota;
+describe vacuna;
+describe producto;
+describe mascota_vacuna;
+
+insert into producto values(4,'Cepillo de cobre','Purina',2500,NULL),(5,'Bozal de mallón','SerPet',45000,NULL),(6,'Shampoo perfumado','VetPet',54000,NULL);
+
+select cedulaCliente as 'Documento', nombreMascota as 'Mascota' from cliente, mascota where idMascotaFK = idMascota;
+
+select nombreMascota as 'Mascota', mascota_vacuna.enfermedad as 'Vacunas aplicadas' from mascota, vacuna, mascota_vacuna where idMascota = idMascotaFK and codigoVacuna = codigoVacunaFk;
+
+select nombreProducto as 'Producto', precio from producto where marca = 'SerPet' order by precio DESC;
+
+select * from mascota where generoMascota like 'M';
+
+select * from producto;
+
 insert into cliente values(1,'Thomas','Neira','Carrera 76A #131-21','+57','3062342857',NULL),(2,'Amelia','Sabi','Carrera 5#12A-65','+57','3056852965',NULL),(3,'Antonio','Ayala','Diagonal 61C#22A-30','+57','3046842679',NULL);
+
+
