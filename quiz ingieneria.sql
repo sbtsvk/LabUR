@@ -1,55 +1,93 @@
-create database Mascotas;
-use Mascotas;
+create database mascotas;
+use mascotas;
 
-create table mascota (
-	idmascota int(11) primary key,
-	nombremascota varchar(15),
-	generomascota varchar(15),
-	razamascota varchar(15),
-	cantidad int(10)
-    
+create table mascota
+(
+	idMascota INT(11) NOT NULL,
+    nombreMascota VARCHAR(15),
+    generoMascota VARCHAR(15),
+    razaMascota VARCHAR(15),
+    cantidad INT(10),
+    PRIMARY KEY (idMascota)
 );
 
-create table producto (
-	codigoproducto int(11) primary key,
-    nombreproducto varchar(15),
-    marca varchar(15),
-    precio float,
-    cedulaclientefk int(11),
-	FOREIGN KEY (cedulaclientefk) REFERENCES cliente(cedulacliente)
-
+create table cliente
+(
+	cedulaCliente INT(11) NOT NULL,
+    nombreCliente VARCHAR(15),
+    apellidoCliente VARCHAR(15),
+    direccionCliente VARCHAR(15),
+    telefono INT(10),
+    idMascotaFK INT(10),
+    PRIMARY KEY (cedulaCliente),
+    FOREIGN KEY (idMascotaFK) REFERENCES mascota(idMascota)
 );
 
-create table mascota_vacuna (
-	codigovacunafk int(11),
-    idmascotafk int(11),
-    enfermedad varchar(15),
-	FOREIGN KEY (idmascotafk) REFERENCES mascota(idmascota),
-	FOREIGN KEY (codigovacunafk) REFERENCES vacuna(codigovacuna)
+create table producto
+(
+	codigoProducto INT(11) NOT NULL,
+    nombreProducto VARCHAR(15),
+    marca VARCHAR(15),
+    precio FLOAT,
+    cedulaClienteFK INT(11),
+    PRIMARY KEY (codigoProducto)
 );
 
-create table vacuna (
-	codigovacuna int(11) primary key,
-    nombrevacuna varchar(15),
-    dosisvacuna int(10),
-    enfermedad varchar(15)
-
+create table producto_cliente
+(
+	codigoProductoFK INT(11) NOT NULL,
+    cedulaClienteFK INT(11) NOT NULL,
+    FOREIGN KEY (cedulaClienteFK) REFERENCES cliente(cedulaCliente),
+    FOREIGN KEY (codigoProductoFK) REFERENCES producto(codigoProducto)
 );
 
-create table cliente (
-	cedulacliente int(11) primary key,
-    nombrecliente varchar(15),
-    apellidocliente varchar(15),
-    direccioncliente varchar(10),
-    telefono int(10),
-    idmascotafk int(11),
-    FOREIGN KEY (idmascotafk) REFERENCES mascota(idMascota) 
+create table vacuna
+(
+	codigoVacuna INT(11) NOT NULL,
+    nombreVacuna VARCHAR(15),
+    dosisVacuna INT(10),
+    enfermedad VARCHAR(15),
+    PRIMARY KEY (codigoVacuna)
 );
 
-alter table producto add column cantidad int not null;
+create table mascota_vacuna
+(
+	codigoVacunaFK INT(11),
+    idMascotaFK INT(11),
+    enfermedad VARCHAR(15),
+    FOREIGN KEY (codigoVacunaFK) REFERENCES vacuna(codigoVacuna),
+    FOREIGN KEY (idMascotaFK) REFERENCES mascota(idMascota)
+);
 
-alter table mascota change column cantidad cantidadmascota 
+select * from mascota;
 
-     
+insert into mascota values(1,'G','M','Pitbull',1),(2,'Lalo','M','Criollo',1),(3,'Lola','F','Terrier',1);
+
+insert into vacuna values(1,'Nobivac','1mL','Rabia'),(2,'Parvigen','1mL','Parvovirus/Moquillo'),(3,'Imovax','1mL','Rabia');
+
+insert into mascota values(4,'Erebus','M','Labrador',1),(5,'Abraxas','M','Criollo',1),(6,'Gojira','F','Bull Terrier',1);
+
+insert into cliente values(1,'erebus','M','labrador',1);
+describe cliente;
+
+select nombreMascota,generoMascota from mascota;
+
+select cedulaCliente as 'Documento',direccionCliente 'Direccion' from cliente;
+
+select cedulaCliente as 'Documento', idMascotaFK as 'Codigo mascota' from cliente order by nombreCliente asc;
+ 
+-- insert into cliente();
+
+-- insert into producto values();
+
+-- SELECT 
+--     CONSTRAINT_NAME 
+-- FROM 
+--     information_schema.KEY_COLUMN_USAGE 
+-- WHERE 
+--     TABLE_NAME = 'producto' 
+--     AND TABLE_SCHEMA = 'mascotas';
+-- ALTER TABLE producto DROP FOREIGN KEY producto_ibfk_1;
+-- ;
      
      
