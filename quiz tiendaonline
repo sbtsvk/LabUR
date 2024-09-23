@@ -1,0 +1,80 @@
+-- menos 10 puuntos;
+create database TiendaOnline;
+use TiendaOnline;
+
+create table producto 
+(
+	idproducto INT auto_increment unique ,
+    nombreProducto VARCHAR(15),
+    precio numeric(15,2),
+    marca varchar(50),
+    codigobarras varchar(50)
+);
+
+create table usuario
+(
+	idusuario INT(11) auto_increment,
+    nombreusuario VARCHAR(15),
+    rol varchar(50),
+    PRIMARY KEY (idusuario)
+);
+
+create table cliente
+(
+	idcliente INT(11) auto_increment,
+    nombrecliente VARCHAR(15),
+    apellidocliente varchar(50),
+    fechanacimiento date,
+    idusuariofk int,
+    PRIMARY KEY (idcliente),
+    foreign key (idusuariofk) references usuario(idusuario)
+);
+
+create table orden
+(
+	idorden INT(11) auto_increment,
+    fechaorden date,
+    idclientefk int,
+    PRIMARY KEY (idorden),
+    foreign key (idclientefk) references cliente(idcliente)
+);
+
+create table orden_producto
+(
+	idordenfk INT,
+    codigobarrasfk varchar(50),
+    cantidad int,
+    foreign key (idordenfk) references orden(idorden),
+    foreign key (codigobarrasfk) references producto(codigobarrasfk)
+);
+
+insert into producto (nombreproducto,precio,marca,codigobarras) values
+('laptop',15000.00,'asus','123abc'),
+('celular',10000.00,'iphone','124abc'),
+('tablet',5000.00,'samsung','125abc');
+
+insert into usuario (nombreusuario,rol) values
+('carlos','empelado'),
+('thomas','cliente'),
+('pepito','gerente');
+
+insert into cliente (nombrecliente,apellidocliente,fechanacimiento,idusuariofk) values 
+('thomas','neira','2009-9-1',2),
+('julio','rondon','2010-2-4',1),
+('carlos','perez','2007-5-12',3);
+
+insert into orden (fechaorden,idclientefk) values
+('2024-5-20',1),
+('2007-4-4',2);
+
+insert into orden_producto (idordenfk,codigobarrasfk,cantidad) values
+(1,'123abc',2),
+(2,'124abc',1);
+
+select * from producto;
+
+select *from producto order by precio asc;
+
+select * from cliente where month (fechanacimiento) = 1;
+
+select * from usuario where rol = 'empleado';
