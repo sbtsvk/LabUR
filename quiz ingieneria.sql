@@ -1,9 +1,12 @@
-create database mascotas;
-use mascotas;
+Aquí te dejo el código completo, incluyendo las consultas de **TAREA** que solicitas, con las búsquedas usando `LIKE` y `NOT LIKE`:
 
-create table mascota
+```sql
+CREATE DATABASE mascotas;
+USE mascotas;
+
+CREATE TABLE mascota
 (
-	idMascota INT(11) NOT NULL,
+    idMascota INT(11) NOT NULL,
     nombreMascota VARCHAR(15),
     generoMascota VARCHAR(15),
     razaMascota VARCHAR(15),
@@ -11,21 +14,22 @@ create table mascota
     PRIMARY KEY (idMascota)
 );
 
-create table cliente
+CREATE TABLE cliente
 (
-	cedulaCliente INT(11) NOT NULL,
+    cedulaCliente INT(11) NOT NULL,
     nombreCliente VARCHAR(15),
     apellidoCliente VARCHAR(15),
     direccionCliente VARCHAR(15),
+    telefonoPrefijo VARCHAR(4),
     telefono VARCHAR(20),
     idMascotaFK INT(10),
     PRIMARY KEY (cedulaCliente),
     FOREIGN KEY (idMascotaFK) REFERENCES mascota(idMascota)
 );
 
-create table producto
+CREATE TABLE producto
 (
-	codigoProducto INT(11) NOT NULL,
+    codigoProducto INT(11) NOT NULL,
     nombreProducto VARCHAR(15),
     marca VARCHAR(15),
     precio FLOAT,
@@ -34,84 +38,85 @@ create table producto
     FOREIGN KEY (cedulaClienteFK) REFERENCES cliente(cedulaCliente)
 );
 
-create table producto_cliente
+CREATE TABLE producto_cliente
 (
-	codigoProductoFK INT(11) NOT NULL,
+    codigoProductoFK INT(11) NOT NULL,
     cedulaClienteFK INT(11) NOT NULL,
     FOREIGN KEY (cedulaClienteFK) REFERENCES cliente(cedulaCliente),
     FOREIGN KEY (codigoProductoFK) REFERENCES producto(codigoProducto)
 );
 
-create table vacuna
+CREATE TABLE vacuna
 (
-	codigoVacuna INT(11) NOT NULL,
+    codigoVacuna INT(11) NOT NULL,
     nombreVacuna VARCHAR(15),
     dosisVacuna INT(10),
     enfermedad VARCHAR(15),
     PRIMARY KEY (codigoVacuna)
 );
 
-create table mascota_vacuna
+CREATE TABLE mascota_vacuna
 (
-	codigoVacunaFK INT(11),
+    codigoVacunaFK INT(11),
     idMascotaFK INT(11),
     enfermedad VARCHAR(15),
     FOREIGN KEY (codigoVacunaFK) REFERENCES vacuna(codigoVacuna),
     FOREIGN KEY (idMascotaFK) REFERENCES mascota(idMascota)
 );
 
-ALTER TABLE cliente ADD COLUMN telefonoPrefijo VARCHAR(4);
-ALTER TABLE cliente MODIFY COLUMN telefonoPrefijo VARCHAR(4) AFTER direccionCliente;
+-- Insert data into mascota
+INSERT INTO mascota VALUES
+(1,'G','M','Pitbull',1),
+(2,'Lalo','M','Criollo',1),
+(3,'Lola','F','Terrier',1),
+(7,'Tony','M','French Poodle',1),
+(4,'Erebus','M','Labrador',1),
+(5,'Abraxas','M','Criollo',1),
+(6,'Gojira','F','Bull Terrier',1);
 
-select * from mascota;
+-- Insert data into cliente
+INSERT INTO cliente VALUES
+(1,'Thomas','Neira','Carrera 76A #131-21','+57','3062342857',NULL),
+(2,'Amelia','Sabi','Carrera 5#12A-65','+57','3056852965',NULL),
+(3,'Antonio','Ayala','Diagonal 61C#22A-30','+57','3046842679',NULL);
 
-insert into mascota values(1,'G','M','Pitbull',1),(2,'Lalo','M','Criollo',1),(3,'Lola','F','Terrier',1);
+-- Insert data into vacuna
+INSERT INTO vacuna VALUES
+(1,'Nobivac','2','Rabia'),
+(2,'Parvigen','1','Parvovirus/Moquillo'),
+(3,'Imovax','4','Rabia');
 
-insert into vacuna values(1,'Nobivac','2mL','Rabia'),(2,'Parvigen','1mL','Parvovirus/Moquillo'),(3,'Imovax','4mL','Rabia');
+-- Queries
+SELECT nombreMascota, generoMascota FROM mascota;
 
-insert into mascota values(7,'Tony','M','French Poodle',1),(8,'Tony Grande','Samoyedo',1);
+SELECT cedulaCliente AS 'Documento', direccionCliente AS 'Direccion' FROM cliente;
 
-insert into mascota values(4,'Erebus','M','Labrador',1),(5,'Abraxas','M','Criollo',1),(6,'Gojira','F','Bull Terrier',1);
+SELECT cedulaCliente AS 'Documento', idMascotaFK AS 'Codigo mascota' 
+FROM cliente 
+ORDER BY nombreCliente ASC; 
 
-insert into cliente values(1,'Thomas','Neira','Carrera 76A #131-21','+57','3062342857',NULL),(2,'Amelia','Sabi','Carrera 5#12A-65','+57','3056852965',NULL),(3,'Antonio','Ayala','Diagonal 61C#22A-30','+57','3046842679',NULL);
- 
-select nombreMascota,generoMascota from mascota;
+SELECT nombreProducto FROM producto WHERE precio = 1000;
 
-select cedulaCliente as 'Documento',direccionCliente 'Direccion' from cliente;
+SELECT nombreVacuna, dosisVacuna FROM vacuna;
 
-select cedulaCliente as 'Documento', idMascotaFK as 'Codigo mascota' from cliente order by nombreCliente asc; 
+SELECT * FROM vacuna WHERE enfermedad = 'Rabia';
 
-select nombreProducto from producto where precio =1000;
+SELECT * FROM mascota WHERE generoMascota = 'M' AND cantidad = 1;
 
-select vacuna from enfermedad where codigoVacunaFK =1000; 
+SELECT nombreProducto FROM producto WHERE precio BETWEEN 1000 AND 10000;
 
-select nombreVacuna,dosisVacuna from vacuna;
+-- TAREA: Búsqueda de patrones con LIKE y NOT LIKE en la tabla "mascota"
 
-select * from vacuna where enfermedad = 'rabia';
+-- 1. Consulta usando LIKE
+-- Buscar todas las mascotas cuyo nombre comience con la letra "L".
+SELECT * 
+FROM mascota 
+WHERE nombreMascota LIKE 'L%';
 
-select * from mascota where generoMascota = 'M' and cantidad = 1;
-
-select nombreProducto from producto where precio between 1000 and 10000 ;
-
-
-
-
-
-
+-- 2. Consulta usando NOT LIKE
+-- Buscar todas las mascotas cuyo nombre no contenga la letra "a".
+SELECT * 
+FROM mascota 
+WHERE nombreMascota NOT LIKE '%a%';
 
 
--- insert into cliente();
-
--- insert into producto values();
-
--- SELECT 
---     CONSTRAINT_NAME 
--- FROM 
---     information_schema.KEY_COLUMN_USAGE 
--- WHERE 
---     TABLE_NAME = 'producto' 
---     AND TABLE_SCHEMA = 'mascotas';
--- ALTER TABLE producto DROP FOREIGN KEY producto_ibfk_1;
--- ;
-     
-     
