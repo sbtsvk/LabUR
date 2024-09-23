@@ -1,6 +1,3 @@
-Aquí te dejo el código completo, incluyendo las consultas de **TAREA** que solicitas, con las búsquedas usando `LIKE` y `NOT LIKE`:
-
-```sql
 CREATE DATABASE mascotas;
 USE mascotas;
 
