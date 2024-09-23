@@ -1,0 +1,95 @@
+CREATE DATABASE TiendaOnline;
+
+USE TiendaOnline;
+
+# -10 puntos :(
+# Perdón profe no vuelve a pasar
+
+CREATE TABLE Cliente
+(
+	idCliente INT(11) NOT NULL AUTO_INCREMENT,
+    nombreCliente VARCHAR(15),
+    apellidoCliente VARCHAR(15),
+    fechaNacimiento DATE,
+    PRIMARY KEY (idCliente)
+);
+
+
+CREATE TABLE Producto
+(
+	idProducto INT NOT NULL AUTO_INCREMENT UNIQUE,
+    codigoBarras VARCHAR(25),
+    nombreProducto VARCHAR(15),
+    Marca VARCHAR(15),
+    Precio NUMERIC(17,2),
+    PRIMARY KEY (codigoBarras)
+);
+
+CREATE TABLE Usuario
+(
+	idUsuario INT(11) NOT NULL AUTO_INCREMENT,
+    rolUsuario ENUM('Empleado','Admin'),
+    nombreUsuario VARCHAR(15),
+    apellidoUsuario VARCHAR(15),
+    PRIMARY KEY(idUsuario)
+);
+
+CREATE TABLE Venta
+(
+	idVenta INT(11) NOT NULL AUTO_INCREMENT,
+    fechaVenta DATE,
+    idUsuarioFK INT(11) NOT NULL,
+    idClienteFK INT(11) NOT NULL,
+	PRIMARY KEY(idVenta),
+    FOREIGN KEY(idUsuarioFK) REFERENCES Usuario(idUsuario),
+    FOREIGN KEY(idClienteFK) REFERENCES Cliente(idCliente)
+);
+
+CREATE TABLE Producto_Venta
+(
+	idVentaFK INT(11) NOT NULL,
+    codigoBarrasFK VARCHAR(25) NOT NULL,
+    Cantidad INT(5),
+    Total NUMERIC(19,2),
+    FOREIGN KEY(idVentaFK) REFERENCES Venta(idVenta),
+    FOREIGN KEY(codigoBarrasFK) REFERENCES Producto(codigoBarras)
+);
+
+INSERT INTO Cliente(nombreCliente, apellidoCliente,fechaNacimiento) VALUES
+('Amelia','Sabi','2005-06-25'),
+('Antonio','Atala','2005-06-25'),
+('Thomas','Neira','2005-09-04'),
+('Caren','Rincón','2005-05-08'),
+('John','Petrucci','1967-07-12'),
+('John','Myung','1967-01-24'),
+('Jane','Doe','2000-01-01');
+
+INSERT INTO Producto(codigoBarras, nombreProducto, Marca, Precio) VALUES
+('191181716','Teclado K65 Mini','Corsair','600000.00'),
+('192637465','Mouse G203','Logitec','190000.00'),
+('111111111','Deskmat','Razer','70000.00'),
+('191919191','Tortuga Cerámica','Céramimax','15000.00');
+
+INSERT INTO Usuario(rolUsuario, nombreUsuario, apellidoUsuario) VALUES
+(1,'Bob','Dale'),
+(2,'Chad','Chadus'),
+(1,'Tom','Apostol'),
+(1,'Admin','Gust');
+
+INSERT INTO Venta(fechaVenta, idUsuarioFK, idClienteFK) VALUES
+('2024-01-01',1,1),
+('2024-01-04',2,1),
+('2024-01-01',2,1),
+('2024-01-04',3,2),
+('2024-01-01',3,2),
+('2024-01-02',1,1),
+('2024-01-03',4,4),
+('2024-01-03',4,2);
+
+#Falto insertar en Producto_Cliente y las consultas :( se me fue el tiempo corrigiendo y revisando cuales columnas deberian tener las tablas
+
+DESCRIBE Cliente;
+DESCRIBE Producto;
+DESCRIBE Usuario;
+DESCRIBE Venta;
+DESCRIBE Producto_Venta;
