@@ -84,9 +84,40 @@ INSERT INTO Venta(fechaVenta, idUsuarioFK, idClienteFK) VALUES
 ('2024-01-01',3,2),
 ('2024-01-02',1,1),
 ('2024-01-03',4,4),
-('2024-01-03',4,2);
+('2024-01-03',4,2),
+('2024-01-03',4,3),
+('2024-01-03',4,3);
+
+INSERT INTO Producto_Venta VALUES (1,191919191,5,(SELECT Precio FROM Producto WHERE codigoBarras = 191919191)*Cantidad),(2,192637465,2,(SELECT Precio FROM Producto WHERE codigoBarras = 192637465)*Cantidad),(4,192637465,2,(SELECT Precio FROM Producto WHERE codigoBarras = 192637465)*Cantidad);
+
+SELECT * FROM Producto_Venta;
+
+SELECT nombreCliente, Cantidad, Total FROM (Venta INNER JOIN Cliente ON idCliente = idClienteFK) INNER JOIN (Producto_Venta INNER JOIN Producto ON codigoBarras = codigoBarrasFK) ON idVenta = idVentaFK;
+
+SELECT * FROM Venta;
+SELECT codigoBarras, nombreProducto, Precio FROM Producto INNER JOIN Venta;
+SELECT * FROM Cliente;
+SELECT * FROM Producto;
+SELECT * FROM Usuario;
+SELECT * FROM Producto_Venta;
 
 #Falto insertar en Producto_Cliente y las consultas :( se me fue el tiempo corrigiendo y revisando cuales columnas deberian tener las tablas
+
+#Conlsultar Cliente de la Máxima Venta
+#En mi caso es mas complicado ya que únicamente incluyo el precio en Producto_Venta y no en Venta pero todas las consultas y datos se pueden conseguir correctamente
+SELECT nombreCliente AS 'Cliente', MAX(Total) AS 'Máximo precio Total' FROM (Cliente INNER JOIN Venta ON idCliente = idClienteFK) INNER JOIN Producto_Venta ON idVenta = idVentaFK;
+
+#Consultar el Cliente y Usuario de un venta específica
+SELECT nombreCliente AS 'Cliente', apellidoUsuario AS 'Vendedor', idVenta FROM Cliente, Usuario, Venta WHERE idCliente = idClienteFK AND idUsuario = idUsuarioFK ORDER BY idVenta ASC;
+#En mi caso retorna 10 tuplas lo cual es correcto ya que 10 ventas fueron realizadas
+
+#Consultar los productos que compró un cliente especifico
+SELECT nombreCliente, nombreProducto, Total FROM (Venta INNER JOIN Cliente ON idCliente = idClienteFK) INNER JOIN (Producto_Venta INNER JOIN Producto ON codigoBarras = codigoBarrasFK) ON idVenta = idVentaFK;
+#Como solo he incluido 3 datos en Producto Venta, no debería haber retornado mas que estos. Al insertar mas con las ventas respectivas debería verse mas completo pero (según yo) la consulta funciona
+
+#Consulta todos los Clientes que han comprado alguna vez
+SELECT DISTINCT nombreCliente AS 'Cliente' FROM Cliente INNER JOIN Venta ON idCliente = idClienteFK;
+#Si el cliente tiene el dato de idClienteFK en venta significa que compro algo, DISTINCT remueve los datos repetidos ya que un cliente puede haber comprado varias veces :D
 
 DESCRIBE Cliente;
 DESCRIBE Producto;
