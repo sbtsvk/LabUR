@@ -1,0 +1,124 @@
+create database TiendaOnline; 
+use TiendaOnline;
+
+create table Cliente(
+idCliente int,
+cedulaCliente varchar(10),
+nombreCliente varchar(20) ,
+apellidoCliente varchar(20) ,
+telefonoCliente varchar(10),
+idusuariofk int,
+primary key(idCliente), 
+foreign key (idusuariofk) references usuario(idusuario) 
+);
+ 
+alter table Cliente add column apellidoCliente varchar (20);
+alter table Cliente add column telefonoCliente varchar (10);
+alter table Cliente add column idCliente int;
+
+create table usuario(
+idusuario int primary key,
+nombreusuario varchar(20),
+cedulausuario varchar(10),
+cargousuario varchar (50),
+telefonousuario varchar (15)
+);
+
+create table producto(
+idproducto int auto_increment unique,
+codigobarras int (12) not null primary key,
+nombreproducto varchar(20),
+marcaproducto varchar(20),
+precioproducto float,
+cedulaCliente int(11)
+);
+
+describe producto;
+
+create table ventas(
+idusuariofk int,
+idventas int(50) not null primary key,
+idClientefk int(10),
+codigoproducto int(12),
+foreign key (idClientefk) references Cliente(idCliente),
+foreign key (idusuariofk) references usuario(idusuario)
+);
+
+create table producto_venta (--  creada pero con dudas
+idventasfk int(20),
+codigobarrasfk varchar(12),
+cantidad int(100),
+total double,
+foreign key(idventasfk) references ventas(idventas),
+foreign key(codigobarrasfk) references producto(codigobarras)
+);
+
+ alter table ventas
+ add constraint FKusuarioventas
+ foreign key (idusuariofk)
+ references usuario(idusuario);
+ 
+ describe usuario;
+ describe ventas; 
+ 
+ alter table venta
+ add constraint FKuClienteventa
+ foreign key (idClientefk)
+ references Cliente(idCliente);
+ 
+ select * from cliente;
+ select * from usuario;
+ select * from producto;
+ select * from venta;
+
+ insert into Cliente (idCliente,nombreCliente,apellidoCliente,cedulaCliente,telefonoCliente) values
+ (1,'sofia','perez',1000257613,3232576626),(2,'angie','rincon',1002838078,3103221362),(3,'daniela','rivera',1027151113,3227693494);
+ insert into Cliente values('tatiana','cabrera',1015243412,3132451434,4);
+  describe cliente;
+  
+ insert into usuario (nombreusuario,cedulausuario,cargousuario,idusuario)values
+('yeimi',1012332434,'gerente',1),('camilo',1026261006,'empleado',2),('david',1000257613,'jefe',3); 
+ insert into usuario values('çaren',10271511112,'vendedora',4);
+ describe usuario;
+ 
+ insert into producto (nombreproducto,marcaproducto,codigoproducto,precioproducto)values
+('yogurt','yogoyogo','l2525b',3500),('bonyurt','alpina','z2134l',5300),('heladoartesanal','cremahelado','n0133p',3400);
+ insert into producto values ('baberro','babylol','b10121',9800);
+ describe producto;
+ 
+ select * from producto;
+ 
+ -- clase
+ 
+ select sum(cantidad) from ventas; 
+ select avg(precio)from  precio;
+ -- suma la cantidad de todos los precios
+ 
+  -- 1 consultar el cliente de la maxima venta hecha 
+   -- 2consultar el usuario y cliente de una venta especifica
+  --  3 consultar los productos que compro un cliente especifica
+   --  4 consultar todos los clientes que han hecho(venta)compras
+ -- consultas multitabla 
+ select * from venta inner join cliente on venta.idClientefk = Cliente.idCliente; -- va atraer todos dlos campos de la venta de la tabla bliente mg
+ 
+ select vta.*,C.nombreCliente
+ from venta vta
+ inner join cliente C on vta.idventa= C.idventafk;
+ 
+ -- para consultar el precio de la venta que está asignada a un cliente
+ select  idCliente,max(precio) from cliente;
+ select * from venta;
+ select idCliente;
+ 
+-- solucion taller 
+
+ select cliente.nombreCliente,idventa.idClientefk,detalleventa.total
+ from idventa
+ inner join Cliente on Cliente.idCliente=idventa.idClientefk
+ inner join detalleventa on venta.idventa=detalleventa.idventafk
+ where total = max(total);
+ 
+ 
+ 
+ -- modificaciones -- /*modificar update nombretabla set campomodificar='nuevovalor';*/
+ update Cliente set nombreCliente='tatiana' where idCliente=4;
