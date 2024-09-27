@@ -1,4 +1,3 @@
--- menos 10 puuntos;
 create database TiendaOnline;
 use TiendaOnline;
 
@@ -8,9 +7,8 @@ create table producto
     nombreProducto VARCHAR(15),
     precio numeric(15,2),
     marca varchar(50),
-    codigobarras varchar(50)
+    codigobarras varchar(50) PRIMARY KEY 
 );
-
 create table usuario
 (
 	idusuario INT(11) auto_increment,
@@ -25,7 +23,7 @@ create table cliente
     nombrecliente VARCHAR(15),
     apellidocliente varchar(50),
     fechanacimiento date,
-    idusuariofk int,
+    idusuariofk int(11),
     PRIMARY KEY (idcliente),
     foreign key (idusuariofk) references usuario(idusuario)
 );
@@ -41,35 +39,42 @@ create table orden
 
 create table orden_producto
 (
-	idordenfk INT,
+	idordenfk INT(11),
     codigobarrasfk varchar(50),
     cantidad int,
     foreign key (idordenfk) references orden(idorden),
-    foreign key (codigobarrasfk) references producto(codigobarrasfk)
+    foreign key (codigobarrasfk) references producto(codigobarras)
 );
 
 insert into producto (nombreproducto,precio,marca,codigobarras) values
 ('laptop',15000.00,'asus','123abc'),
 ('celular',10000.00,'iphone','124abc'),
+('camisabb',9000.00,'baby','122abc'),
 ('tablet',5000.00,'samsung','125abc');
 
+select * from producto;
+
 insert into usuario (nombreusuario,rol) values
-('carlos','empelado'),
-('thomas','cliente'),
+('carlos','empleado'),
+('thomas','empleado'),
 ('pepito','gerente');
 
 insert into cliente (nombrecliente,apellidocliente,fechanacimiento,idusuariofk) values 
 ('thomas','neira','2009-9-1',2),
 ('julio','rondon','2010-2-4',1),
-('carlos','perez','2007-5-12',3);
+('carlos','perez','2007-5-12',3),
+('tatiana','perez','1954-9-4',4),
+('carlos','perez','2007-5-12',5);
 
 insert into orden (fechaorden,idclientefk) values
 ('2024-5-20',1),
 ('2007-4-4',2);
 
+select * from orden;
+
 insert into orden_producto (idordenfk,codigobarrasfk,cantidad) values
-(1,'123abc',2),
-(2,'124abc',1);
+(9,'123abc',2),
+(10,'124abc',1);
 
 select * from producto;
 
@@ -85,15 +90,15 @@ select * from producto where nombreproducto like '%r%';
 
 select o.idorden,p.nombreproducto,p.precio
 from orden o
-join ordenproducto op on o.idorden = op.idordenfk
-join producto p on op.idproductofk = p.idproducto
+join orden_producto op on o.idorden = op.idordenfk
+join producto p on op.codigobarrasfk = p.codigobarras
 where p.precio = 15.0;
 
 select cliente.idcliente, cliente.nombrecliente,cliente.apellidocliente, sum(producto.precio * orden_producto.cantidad) as totalventa
 from cliente cliente
 inner join orden orden on cliente.idcliente = orden.idclientefk
 inner join  orden_producto orden_producto on orden.idorden = orden_producto.idordenfk
-inner join producto producto on orden_producto.idproductofk =  producto.idproducto
+inner join producto producto on orden_producto.codigobarrasfk =  producto.idproducto
 group by cliente.idcliente
 order by totalventa desc
 limit 1;
