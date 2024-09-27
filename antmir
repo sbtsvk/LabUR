@@ -1,0 +1,140 @@
+CREATE DATABASE Tiendanline;
+
+USE Tiendanline;
+
+# -10 puntos :(
+# Perdón profe no vuelve a pasar
+
+CREATE TABLE Cliente
+(
+	idCliente INT(11) NOT NULL AUTO_INCREMENT,
+    nombreCliente VARCHAR(15),
+    apellidoCliente VARCHAR(15),
+    fechaNacimiento DATE,
+    PRIMARY KEY (idCliente)
+);
+
+
+CREATE TABLE Producto
+(
+	idProducto INT NOT NULL AUTO_INCREMENT UNIQUE,
+    codigoBarras VARCHAR(25),
+    nombreProducto VARCHAR(50),
+    Marca VARCHAR(15),
+    Precio NUMERIC(17,2),
+    PRIMARY KEY (codigoBarras)
+);
+
+CREATE TABLE Usuario
+(
+	idUsuario INT(11) NOT NULL AUTO_INCREMENT,
+    rolUsuario ENUM('Empleado','Admin'),
+    nombreUsuario VARCHAR(15),
+    apellidoUsuario VARCHAR(15),
+    PRIMARY KEY(idUsuario)
+);
+
+CREATE TABLE Venta
+(
+	idVenta INT(11) NOT NULL AUTO_INCREMENT,
+    fechaVenta DATE,
+    idUsuarioFK INT(11) NOT NULL,
+    idClienteFK INT(11) NOT NULL,
+	PRIMARY KEY(idVenta),
+    FOREIGN KEY(idUsuarioFK) REFERENCES Usuario(idUsuario),
+    FOREIGN KEY(idClienteFK) REFERENCES Cliente(idCliente)
+);
+
+CREATE TABLE Producto_Venta
+(
+	idVentaFK INT(11) NOT NULL,
+    codigoBarrasFK VARCHAR(25) NOT NULL,
+    Cantidad INT(5),
+    Total NUMERIC(19,2),
+    FOREIGN KEY(idVentaFK) REFERENCES Venta(idVenta),
+    FOREIGN KEY(codigoBarrasFK) REFERENCES Producto(codigoBarras)
+);
+
+INSERT INTO Cliente(nombreCliente, apellidoCliente,fechaNacimiento) VALUES
+('Amelia','Sabi','2005-06-25'),
+('Antonio','Atala','2005-06-25'),
+('Thomas','Neira','2005-09-04'),
+('Caren','Rincón','2005-05-08'),
+('John','Petrucci','1967-07-12'),
+('John','Myung','1967-01-24'),
+('Jane','Doe','2000-01-01');
+
+INSERT INTO Producto(codigoBarras, nombreProducto, Marca, Precio) VALUES
+('191181716','Teclado K65 Mini','Corsair','600000.00'),
+('192637465','Mouse G203','Logitec','190000.00'),
+('111111111','Deskmat','Razer','70000.00'),
+('191919191','Tortuga Cerámica','Céramimax','15000.00');
+
+INSERT INTO Usuario(rolUsuario, nombreUsuario, apellidoUsuario) VALUES
+(1,'Bob','Dale'),
+(2,'Chad','Chadus'),
+(1,'Tom','Apostol'),
+(1,'Admin','Gust');
+
+INSERT INTO Venta(fechaVenta, idUsuarioFK, idClienteFK) VALUES
+('2024-01-01',1,1),
+('2024-01-04',2,1),
+('2024-01-01',2,1),
+('2024-01-04',3,2),
+('2024-01-01',3,2),
+('2024-01-02',1,1),
+('2024-01-03',4,4),
+('2024-01-03',4,2),
+('2024-01-03',4,3),
+('2024-01-03',4,3);
+
+INSERT INTO Producto_Venta VALUES (1,191919191,5,(SELECT Precio FROM Producto WHERE codigoBarras = 191919191)*Cantidad),(2,192637465,2,(SELECT Precio FROM Producto WHERE codigoBarras = 192637465)*Cantidad),(4,192637465,2,(SELECT Precio FROM Producto WHERE codigoBarras = 192637465)*Cantidad);
+
+SELECT * FROM Producto_Venta;
+
+SELECT nombreCliente, Cantidad, Total FROM (Venta INNER JOIN Cliente ON idCliente = idClienteFK) INNER JOIN (Producto_Venta INNER JOIN Producto ON codigoBarras = codigoBarrasFK) ON idVenta = idVentaFK;
+
+SELECT codigoBarras, nombreProducto, Precio FROM Producto INNER JOIN Venta;
+
+#Falto insertar en Producto_Cliente y las consultas :( se me fue el tiempo corrigiendo y revisando cuales columnas deberian tener las tablas
+
+#Conlsultar Cliente de la Máxima Venta
+#En mi caso es mas complicado ya que únicamente incluyo el precio en Producto_Venta y no en Venta pero todas las consultas y datos se pueden conseguir correctamente
+SELECT nombreCliente AS 'Cliente', MAX(Total) AS 'Máximo precio Total' FROM (Cliente INNER JOIN Venta ON idCliente = idClienteFK) INNER JOIN Producto_Venta ON idVenta = idVentaFK;
+
+#Consultar el Cliente y Usuario de un venta específica
+SELECT nombreCliente AS 'Cliente', apellidoUsuario AS 'Vendedor', idVenta FROM Cliente, Usuario, Venta WHERE idCliente = idClienteFK AND idUsuario = idUsuarioFK ORDER BY idVenta ASC;
+#En mi caso retorna 10 tuplas lo cual es correcto ya que 10 ventas fueron realizadas
+
+#Consultar los productos que compró un cliente especifico
+SELECT nombreCliente, nombreProducto, Total FROM (Venta INNER JOIN Cliente ON idCliente = idClienteFK) INNER JOIN (Producto_Venta INNER JOIN Producto ON codigoBarras = codigoBarrasFK) ON idVenta = idVentaFK;
+#Como solo he incluido 3 datos en Producto Venta, no debería haber retornado mas que estos. Al insertar mas con las ventas respectivas debería verse mas completo pero (según yo) la consulta funciona
+
+#Consulta todos los Clientes que han comprado alguna vez
+SELECT DISTINCT nombreCliente AS 'Cliente' FROM Cliente INNER JOIN Venta ON idCliente = idClienteFK;
+#Si el cliente tiene el dato de idClienteFK en venta significa que compro algo, DISTINCT remueve los datos repetidos ya que un cliente puede haber comprado varias veces :D
+
+#Insertarme a mi como usuario y a la profe como cliente
+INSERT INTO Usuario(rolUsuario, nombreUsuario, apellidoUsuario) VALUE(2,'Thomas','Neira');
+INSERT INTO Cliente(nombreCliente, apellidoCliente, fechaNacimiento) VALUE('Tatiana','Cabrera','1985-11-24');
+#Luego venderle un producto de bebé a la profe
+INSERT INTO Producto(codigoBarras, nombreProducto, Marca, Precio) VALUES('103050709','Pañales 100 Pack','Huggies',80000);
+INSERT INTO Venta(fechaVenta, idUsuarioFK, idClienteFK) VALUES('2024-09-27',5,8);
+INSERT INTO Producto_Venta VALUES(11,103050709,1,80000);
+
+#Modificar el número de orden (Venta en mi caso)
+
+
+#Describes de todo por si necesito mirar definiciones
+DESCRIBE Cliente;
+DESCRIBE Producto;
+DESCRIBE Usuario;
+DESCRIBE Venta;
+DESCRIBE Producto_Venta;
+
+#Selects de todo por si necesito mirar datos
+SELECT * FROM Venta;
+SELECT * FROM Cliente;
+SELECT * FROM Producto;
+SELECT * FROM Usuario;
+SELECT * FROM Producto_Venta;
