@@ -19,7 +19,7 @@ CREATE TABLE Producto
 (
 	idProducto INT NOT NULL AUTO_INCREMENT UNIQUE,
     codigoBarras VARCHAR(25),
-    nombreProducto VARCHAR(15),
+    nombreProducto VARCHAR(50),
     Marca VARCHAR(15),
     Precio NUMERIC(17,2),
     PRIMARY KEY (codigoBarras)
@@ -94,12 +94,7 @@ SELECT * FROM Producto_Venta;
 
 SELECT nombreCliente, Cantidad, Total FROM (Venta INNER JOIN Cliente ON idCliente = idClienteFK) INNER JOIN (Producto_Venta INNER JOIN Producto ON codigoBarras = codigoBarrasFK) ON idVenta = idVentaFK;
 
-SELECT * FROM Venta;
 SELECT codigoBarras, nombreProducto, Precio FROM Producto INNER JOIN Venta;
-SELECT * FROM Cliente;
-SELECT * FROM Producto;
-SELECT * FROM Usuario;
-SELECT * FROM Producto_Venta;
 
 #Falto insertar en Producto_Cliente y las consultas :( se me fue el tiempo corrigiendo y revisando cuales columnas deberian tener las tablas
 
@@ -119,8 +114,26 @@ SELECT nombreCliente, nombreProducto, Total FROM (Venta INNER JOIN Cliente ON id
 SELECT DISTINCT nombreCliente AS 'Cliente' FROM Cliente INNER JOIN Venta ON idCliente = idClienteFK;
 #Si el cliente tiene el dato de idClienteFK en venta significa que compro algo, DISTINCT remueve los datos repetidos ya que un cliente puede haber comprado varias veces :D
 
+#Insertarme a mi como usuario y a la profe como cliente
+INSERT INTO Usuario(rolUsuario, nombreUsuario, apellidoUsuario) VALUE(2,'Antonio','Ayala');
+INSERT INTO Cliente(nombreCliente, apellidoCliente, fechaNacimiento) VALUE('Tatiana','Cabrera','1985-11-24');
+#Luego venderle un producto de bebé a la profe
+INSERT INTO Venta(fechaVenta, idUsuarioFK, idClienteFK) VALUES('2024-09-27',5,8);
+INSERT INTO Producto_Venta VALUES(11,103050709,1,80000);
+
+#Modificar el número de orden (Venta en mi caso)
+
+
+#Describes de todo por si necesito mirar definiciones
 DESCRIBE Cliente;
 DESCRIBE Producto;
 DESCRIBE Usuario;
 DESCRIBE Venta;
 DESCRIBE Producto_Venta;
+
+#Selects de todo por si necesito mirar datos
+SELECT * FROM Venta;
+SELECT * FROM Cliente;
+SELECT * FROM Producto;
+SELECT * FROM Usuario;
+SELECT * FROM Producto_Venta;
