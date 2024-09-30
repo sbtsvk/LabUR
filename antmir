@@ -138,3 +138,14 @@ SELECT * FROM Cliente;
 SELECT * FROM Producto;
 SELECT * FROM Usuario;
 SELECT * FROM Producto_Venta;
+#procedimientos almacenados subrutinas almacenar informacion en la base de datos
+#create procedure nombre_procedimiento
+delimiter //
+create procedure registrarproducto(idProducto INT,codigoBarras VARCHAR(25),nombreProducto VARCHAR(50),Marca VARCHAR(15),Precio NUMERIC(17,2)
+begin
+
+INSERT INTO Producto(codigoBarras, nombreProducto, Marca, Precio) VALUES
+('191181716','Teclado K65 Mini','Corsair','600000.00')
+end //
+
+delimiter;
