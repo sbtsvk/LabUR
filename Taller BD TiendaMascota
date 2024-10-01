@@ -1,0 +1,63 @@
+  create database TiendaMascota; 
+use TiendaMascota;
+
+create table Mascota(
+idMascota int primary key,
+nombreMascota varchar (15),
+generoMascota varchar (15),
+razaMascota varchar (15)
+);
+
+create table cliente(
+cedulaCliente varchar(15),
+nombreCliente varchar(20) not null,
+direccionCliente varchar (10),
+numeroCliente varchar(15),
+idMascotaFK int (11),
+primary key(cedulaCliente),
+foreign key (idMascotaFK) references Mascota (idMascota)
+);
+
+create table Producto(
+codigoProducto int (50) not null,
+nombreProducto varchar (15),
+marcaProducto varchar (15),
+precioProducto float,
+cedulaClienteFK int (15),
+primary key (codigoProducto),
+foreign key (cedulaClienteFK) references Cliente (cedulaCliente)
+);
+
+create table Vacuna(
+codigoVacuna int primary key,
+nombreVacuna varchar  (15),
+dosisVacuna int (10),
+enfermedad varchar (15),
+primary key ( codigoVacuna)
+);
+
+create table Mascota_vacuna(
+codigoVacunaFK int (15),
+idMascotaFK int (11),
+enfermedad varchar (15),
+foreign key (codigoVacunaFK) references Vacuna (codigoVacuna),
+foreign key  (idMascotaFK) references Mascota (idMascota)
+);
+
+select * from Mascota;
+select * from cliente;
+select * from vacuna;
+select * from procuto;
+
+describe Mascota;
+describe cliente;
+describe vacuna;
+describe producto;
+
+
+-- insert into Mascota ( idMascota, nombreMascota, generoMascota, razaMascota, cantidad)
+
+insert into vacuna values (1,'desparacitante','pets','',1);
+insert into producto values (1,'shampo','pets',10500,10271,1);
+insert into cliente values(1027151112,'caren','perez','cll 49d sur #5p-27',3214552264,1),(1027151113,'daniela','perez','cll 49d sur #5d-61',3223441367,2);
+insert into Mascota values (1,'koky','masculino', 'criollo', 1),(2,'koky','masculino','criollo', 1),(3,'koky','masculino','criollo', 1);
