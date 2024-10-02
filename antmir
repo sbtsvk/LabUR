@@ -64,7 +64,6 @@ INSERT INTO Producto(codigoBarras, nombreProducto, Marca, Precio) VALUES
 ('192637465','Mouse G203','Logitec',190000.00),
 ('111111111','Deskmat','Razer',70000.00),
 ('191919191','Tortuga Cerámica','Céramimax',15000.00);
-
 INSERT INTO Usuario(rolUsuario, nombreUsuario, apellidoUsuario) VALUES
 ('Empleado','Bob','Dale'),
 ('Admin','Chad','Chadus'),
@@ -152,7 +151,6 @@ BEGIN
 END //
 DELIMITER ;
 
-
 DELIMITER //
 CREATE PROCEDURE modificarFechaNacimiento(
     IN idClienteParam INT,
@@ -180,3 +178,41 @@ GROUP BY C.idCliente
 ORDER BY TotalCompras DESC
 LIMIT 1;
 
+#sub consultas:son consultas anidadas dentro de otra consulta 
+ 
+ select avg(salario) as promediosalario
+ from empelado;
+ 
+ select idempleado,apellidoempleado,salario
+ from empleado
+ where salario > (
+ select avg(salario)
+ from empleado
+ );
+ 
+ select idempleado,nombreempleado,idarea,nombrearea
+ from empleado
+ where idarea in (select idarea from area where nombreempleado='juan');
+ 
+ 
+ select * 
+ from producto
+ where precio > (
+ select avg(precio)
+ from producto
+ );
+
+SELECT c.nombreCliente, c.apellidoCliente, SUM(pv.Total) AS TotalCompras
+FROM Cliente c
+JOIN Venta v ON c.idCliente = v.idClienteFK
+JOIN Producto_Venta pv ON v.idVenta = pv.idVentaFK
+GROUP BY c.idCliente
+HAVING TotalCompras > (
+    SELECT AVG(TotalCompras)
+    FROM (
+        SELECT SUM(pv.Total) AS TotalCompras
+        FROM Venta v
+        JOIN Producto_Venta pv ON v.idVenta = pv.idVentaFK
+        GROUP BY v.idClienteFK
+    ) AS subquery
+);
