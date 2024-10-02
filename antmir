@@ -140,11 +140,18 @@ END //
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE consultarProductos()
+CREATE PROCEDURE ConsultarProductosCompradosPorCliente(
+    IN idClienteParametro INT
+)
 BEGIN
-    SELECT * FROM Producto;
+    SELECT Producto.nombreProducto, Producto.Marca, Producto_Venta.Cantidad, Producto_Venta.Total
+    FROM Producto
+    INNER JOIN Producto_Venta ON Producto.codigoBarras = Producto_Venta.codigoBarrasFK
+    INNER JOIN Venta ON Producto_Venta.idVentaFK = Venta.idVenta
+    WHERE Venta.idClienteFK = idClienteParametro;
 END //
 DELIMITER ;
+
 
 DELIMITER //
 CREATE PROCEDURE modificarFechaNacimiento(
