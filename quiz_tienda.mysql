@@ -122,7 +122,9 @@ INSERT INTO Venta(fechaVenta, idUsuarioFK, idClienteFK) VALUES('2024-09-27',5,8)
 INSERT INTO Producto_Venta VALUES(11,103050709,1,80000);
 
 #Modificar el número de orden (Venta en mi caso)
-
+INSERT INTO Cliente(nombreCliente, apellidoCliente, fechaNacimiento) VALUE('Tatiana','Cabrera','1985-11-24');
+INSERT INTO Venta(fechaVenta, idUsuarioFK, idClienteFK) VALUES('2024-09-27',5,8);
+INSERT INTO Producto_Venta VALUES(11,103050709,1,80000);
 
 #Describes de todo por si necesito mirar definiciones
 DESCRIBE Cliente;
@@ -137,3 +139,61 @@ SELECT * FROM Cliente;
 SELECT * FROM Producto;
 SELECT * FROM Usuario;
 SELECT * FROM Producto_Venta;
+
+DELIMITER //
+CREATE PROCEDURE Registrar_producto(IN c VARCHAR(25),IN n VARCHAR(50),IN m VARCHAR(15),IN p NUMERIC(17,2))
+BEGIN
+	INSERT INTO Producto(codigoBarras, nombreProducto, Marca, Precio) VALUES(c,n,m,p);
+END //
+DELIMITER ;
+
+#Inactivar un Cliente, empezando por añadir el estado del cliente como atributo en la tabla ya que no existe
+ALTER TABLE Cliente ADD COLUMN Estado ENUM('Activo','Inactivo') DEFAULT 'Activo';
+#Volver a todos los clientes activos ya que como la columna acaba de ser creada todos estan como NULL
+UPDATE Cliente SET Estado = 1 WHERE Estado IS NULL;
+
+DELIMITER //
+CREATE PROCEDURE inactivar_Cliente(id INT(11))
+BEGIN
+	UPDATE Cliente SET Estado = 2 WHERE idCliente = id;
+END //
+DELIMITER ;
+
+#Procedimiento para consultar productos, Hice uno por codigo y otro por nombre.
+DELIMITER //
+CREATE PROCEDURE Consultar_Producto_codigo(Cod VARCHAR(25))
+BEGIN
+	SELECT nombreProducto, Marca, Precio FROM Producto WHERE codigoBarras = Cod;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE Consultar_Producto_nombre(nombre VARCHAR(50))
+BEGIN
+	SELECT codigoBarras, nombreProducto, Marca, Precio FROM Producto WHERE nombreProducto LIKE CONCAT('%', nombre,'%');
+END //
+DELIMITER ;
+
+#Procedimiento para modificar la fecha de nacimiento de un cliente
+DELIMITER //
+CREATE PROCEDURE Modificar_fecha_nacimiento(id INT(11),fecha DATE)
+BEGIN
+	UPDATE Cliente SET fechaNacimiento = fecha WHERE idCliente = id;
+END //
+DELIMITER ;
+
+#Consultar cliente que compro un producto especifico y numero de orden
+CREATE VIEW compra_Cliente AS
+SELECT nombreCliente AS 'Cliente', nombreProducto AS 'Producto', idVenta AS 'Numero de orden' FROM (Venta INNER JOIN Cliente ON idCliente = idClienteFK) INNER JOIN (Producto_Venta INNER JOIN Producto ON codigoBarras = codigoBarrasFK) ON idVenta = idVentaFK;
+
+SELECT * FROM compra_Cliente;
+
+#Calcular los productos que se vendan a un precio mayor del promedio
+
+SELECT nombreProducto AS 'Producto', Precio FROM Producto WHERE Precio > (SELECT AVG(Precio) FROM Producto);
+
+#Mostrar clientes que compren que el total de compra sea mayor al promedio de compras de la tienda
+SELECT nombreCliente AS 'Cliente', Total FROM (Cliente INNER JOIN Venta ON idCliente = idClienteFK) INNER JOIN Producto_Venta ON idVenta = idVentaFK WHERE Total > (SELECT AVG(Total) FROM Producto_Venta);
+
+#Mostrar promedio de precios de produtos comprados por clientes
+SELECT nombreCliente AS 'Cliente', AVG(Precio) FROM (Venta INNER JOIN Cliente ON idCliente = idClienteFK) INNER JOIN (Producto_Venta INNER JOIN Producto ON codigoBarras = codigoBarrasFK) ON idVenta = idVentaFK;
