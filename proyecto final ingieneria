@@ -1,0 +1,353 @@
+-- Crear la base de datos
+CREATE DATABASE sistema_reservas;
+
+-- Usar la base de datos
+USE sistema_reservas;
+
+-- Crear la tabla Usuario
+CREATE TABLE Usuariosistema (
+    idUsuario INT PRIMARY KEY AUTO_INCREMENT,
+    nombreUsuario VARCHAR(50) NOT NULL,
+    tipoUsuario VARCHAR(20) NOT NULL,
+    correo VARCHAR(100) NOT NULL,
+    estadoUsuario BOOLEAN
+);
+
+-- Crear la tabla Laboratorio
+CREATE TABLE Laboratorio (
+    idLaboratorio INT PRIMARY KEY AUTO_INCREMENT,
+    nombreLaboratorio VARCHAR(50) NOT NULL,
+    capacidad INT NOT NULL,
+    ubicacion VARCHAR(100) NOT NULL,
+    estadoLaboratorio BOOLEAN
+);
+
+-- Crear la tabla Reserva
+CREATE TABLE Reserva (
+    idReserva INT PRIMARY KEY AUTO_INCREMENT,
+    idUsuarioFK INT,
+    idLaboratorioFK INT,
+    fechaReserva DATE NOT NULL,
+    horaInicio TIME,
+    horaFin TIME,
+    estadoReserva BOOLEAN,
+    FOREIGN KEY (idUsuarioFK) REFERENCES Usuariosistema(idUsuario),
+    FOREIGN KEY (idLaboratorioFK) REFERENCES Laboratorio(idLaboratorio)
+    
+);
+ALTER TABLE Reserva 
+ADD CONSTRAINT reserva_ibfk_1 
+FOREIGN KEY (idUsuarioFK) 
+REFERENCES Usuariosistema(idUsuario);
+
+ALTER TABLE Laboratorio 
+ADD COLUMN idAdministradorFK INT,
+ADD CONSTRAINT fk_admin_laboratorio 
+FOREIGN KEY (idAdministradorFK) 
+REFERENCES Administrador(idAdministrador);
+
+-- Crear la tabla Administrador
+CREATE TABLE Administrador (
+    idAdministrador INT PRIMARY KEY AUTO_INCREMENT,
+    nombreAdministrador VARCHAR(50) NOT NULL,
+    correo VARCHAR(100) NOT NULL
+);
+
+INSERT INTO Usuariosistema (nombreUsuario, tipoUsuario, correo, estadoUsuario) VALUES
+('Juan Pérez', 'Estudiante', 'juan.perez@ejemplo.com', TRUE),
+('Maria Gómez', 'Docente', 'maria.gomez@ejemplo.com', TRUE),
+('Carlos Torres', 'Estudiante', 'carlos.torres@ejemplo.com', TRUE),
+('Ana Sánchez', 'Estudiante', 'ana.sanchez@ejemplo.com', TRUE),
+('Luis Hernández', 'Docente', 'luis.hernandez@ejemplo.com', TRUE),
+('Elena Martínez', 'Estudiante', 'elena.martinez@ejemplo.com', TRUE),
+('Javier Ruiz', 'Estudiante', 'javier.ruiz@ejemplo.com', TRUE),
+('Sofía Castro', 'Estudiante', 'sofia.castro@ejemplo.com', TRUE),
+('Fernando López', 'Docente', 'fernando.lopez@ejemplo.com', TRUE),
+('Gabriela Ramírez', 'Estudiante', 'gabriela.ramirez@ejemplo.com', TRUE),
+('David Romero', 'Estudiante', 'david.romero@ejemplo.com', TRUE),
+('Valentina Ríos', 'Estudiante', 'valentina.rios@ejemplo.com', TRUE),
+('Cristian Díaz', 'Estudiante', 'cristian.diaz@ejemplo.com', TRUE),
+('Nicolás Torres', 'Docente', 'nicolas.torres@ejemplo.com', TRUE),
+('Laura Morales', 'Estudiante', 'laura.morales@ejemplo.com', TRUE),
+('Pablo Silva', 'Estudiante', 'pablo.silva@ejemplo.com', TRUE),
+('Camila Ortega', 'Estudiante', 'camila.ortega@ejemplo.com', TRUE),
+('Ricardo Jiménez', 'Estudiante', 'ricardo.jimenez@ejemplo.com', TRUE),
+('Andrés Cordero', 'Docente', 'andres.cordero@ejemplo.com', TRUE),
+('María Clara', 'Estudiante', 'maria.clara@ejemplo.com', TRUE),
+('José Medina', 'Estudiante', 'jose.medina@ejemplo.com', TRUE),
+('Natalia Castillo', 'Estudiante', 'natalia.castillo@ejemplo.com', TRUE),
+('Álvaro Paredes', 'Docente', 'alvaro.paredes@ejemplo.com', TRUE),
+('Diego Salazar', 'Estudiante', 'diego.salazar@ejemplo.com', TRUE),
+('Rosa Flores', 'Estudiante', 'rosa.flores@ejemplo.com', TRUE),
+('Camilo Vega', 'Estudiante', 'camilo.vega@ejemplo.com', TRUE),
+('Julián Arévalo', 'Docente', 'julian.arevalo@ejemplo.com', TRUE),
+('Teresa López', 'Estudiante', 'teresa.lopez@ejemplo.com', TRUE),
+('Gustavo León', 'Estudiante', 'gustavo.leon@ejemplo.com', TRUE),
+('Mariana Zamora', 'Estudiante', 'mariana.zamora@ejemplo.com', TRUE),
+('Ricardo González', 'Estudiante', 'ricardo.gonzalez@ejemplo.com', TRUE),
+('Claudia Hernández', 'Docente', 'claudia.hernandez@ejemplo.com', TRUE),
+('Santiago Acevedo', 'Estudiante', 'santiago.acevedo@ejemplo.com', TRUE),
+('Lucía Mejía', 'Estudiante', 'lucia.mejia@ejemplo.com', TRUE),
+('Hugo Pineda', 'Estudiante', 'hugo.pineda@ejemplo.com', TRUE),
+('Paola Torres', 'Estudiante', 'paola.torres@ejemplo.com', TRUE),
+('Pedro Rivas', 'Docente', 'pedro.rivas@ejemplo.com', TRUE),
+('Valeria Torres', 'Estudiante', 'valeria.torres@ejemplo.com', TRUE),
+('Cristina Barrera', 'Estudiante', 'cristina.barrera@ejemplo.com', TRUE),
+('Mauro Ortiz', 'Estudiante', 'mauro.ortiz@ejemplo.com', TRUE),
+('Andrea Gutiérrez', 'Estudiante', 'andrea.gutierrez@ejemplo.com', TRUE),
+('Felipe Martínez', 'Estudiante', 'felipe.martinez@ejemplo.com', TRUE),
+('Laura Castro', 'Docente', 'laura.castro@ejemplo.com', TRUE),
+('Manuel Torres', 'Estudiante', 'manuel.torres@ejemplo.com', TRUE),
+('Isabel Valdez', 'Estudiante', 'isabel.valdez@ejemplo.com', TRUE),
+('Oscar Álvarez', 'Docente', 'oscar.alvarez@ejemplo.com', TRUE),
+('Victoria Medina', 'Estudiante', 'victoria.medina@ejemplo.com', TRUE),
+('Jorge Morales', 'Estudiante', 'jorge.morales@ejemplo.com', TRUE),
+('Thomas Neira', 'Estudiante','thomas.neira@ejemplo.com',TRUE);
+
+INSERT INTO Reserva (idUsuarioFK, idLaboratorioFK, fechaReserva, horaInicio, horaFin, estadoReserva) 
+VALUES
+(1, 1, '2024-10-10', '08:00:00', '10:00:00', TRUE),
+(2, 2, '2024-10-11', '10:00:00', '12:00:00', TRUE),
+(3, 3, '2024-10-12', '13:00:00', '15:00:00', TRUE),
+(1, 4, '2024-10-13', '09:00:00', '11:00:00', TRUE),
+(2, 5, '2024-10-14', '14:00:00', '16:00:00', TRUE),
+(3, 6, '2024-10-15', '08:00:00', '10:00:00', TRUE),
+(1, 7, '2024-10-16', '11:00:00', '13:00:00', TRUE),
+(2, 8, '2024-10-17', '12:00:00', '14:00:00', TRUE),
+(3, 9, '2024-10-18', '09:00:00', '11:00:00', TRUE),
+(1, 10, '2024-10-19', '15:00:00', '17:00:00', TRUE),
+(2, 11, '2024-10-20', '10:00:00', '12:00:00', TRUE),
+(3, 12, '2024-10-21', '11:00:00', '13:00:00', TRUE),
+(1, 13, '2024-10-22', '09:00:00', '11:00:00', TRUE),
+(2, 14, '2024-10-23', '14:00:00', '16:00:00', TRUE),
+(3, 15, '2024-10-24', '08:00:00', '10:00:00', TRUE),
+(1, 16, '2024-10-25', '13:00:00', '15:00:00', TRUE),
+(2, 17, '2024-10-26', '10:00:00', '12:00:00', TRUE),
+(3, 18, '2024-10-27', '09:00:00', '11:00:00', TRUE),
+(1, 19, '2024-10-28', '08:00:00', '10:00:00', TRUE),
+(2, 20, '2024-10-29', '14:00:00', '16:00:00', TRUE),
+(3, 21, '2024-10-30', '10:00:00', '12:00:00', TRUE),
+(1, 22, '2024-10-31', '09:00:00', '11:00:00', TRUE),
+(2, 23, '2024-11-01', '08:00:00', '10:00:00', TRUE),
+(3, 24, '2024-11-02', '15:00:00', '17:00:00', TRUE),
+(1, 25, '2024-11-03', '13:00:00', '15:00:00', TRUE),
+(2, 26, '2024-11-04', '11:00:00', '13:00:00', TRUE),
+(3, 27, '2024-11-05', '14:00:00', '16:00:00', TRUE),
+(1, 28, '2024-11-06', '09:00:00', '11:00:00', TRUE),
+(2, 29, '2024-11-07', '10:00:00', '12:00:00', TRUE),
+(3, 30, '2024-11-08', '08:00:00', '10:00:00', TRUE),
+(1, 31, '2024-11-09', '11:00:00', '13:00:00', TRUE),
+(2, 32, '2024-11-10', '14:00:00', '16:00:00', TRUE),
+(3, 33, '2024-11-11', '15:00:00', '17:00:00', TRUE),
+(1, 34, '2024-11-12', '09:00:00', '11:00:00', TRUE),
+(2, 35, '2024-11-13', '10:00:00', '12:00:00', TRUE),
+(3, 36, '2024-11-14', '08:00:00', '10:00:00', TRUE),
+(1, 37, '2024-11-15', '11:00:00', '13:00:00', TRUE),
+(2, 38, '2024-11-16', '14:00:00', '16:00:00', TRUE),
+(3, 39, '2024-11-17', '10:00:00', '12:00:00', TRUE),
+(1, 40, '2024-11-18', '09:00:00', '11:00:00', TRUE),
+(2, 41, '2024-11-19', '10:00:00', '12:00:00', TRUE),
+(3, 42, '2024-11-20', '08:00:00', '10:00:00', TRUE),
+(1, 43, '2024-11-21', '11:00:00', '13:00:00', TRUE),
+(2, 44, '2024-11-22', '14:00:00', '16:00:00', TRUE),
+(3, 45, '2024-11-23', '15:00:00', '17:00:00', TRUE),
+(1, 46, '2024-11-24', '09:00:00', '11:00:00', TRUE),
+(2, 47, '2024-11-25', '10:00:00', '12:00:00', TRUE),
+(3, 48, '2024-11-26', '08:00:00', '10:00:00', TRUE),
+(1, 49, '2024-11-27', '11:00:00', '13:00:00', TRUE),
+(2, 50, '2024-11-28', '14:00:00', '16:00:00', TRUE);
+
+INSERT INTO Administrador (nombreAdministrador, correo) VALUES
+('Laura Martínez', 'laura.martinez@ejemplo.com'),
+('Pedro Sánchez', 'pedro.sanchez@ejemplo.com'),
+('Isabel Castillo', 'isabel.castillo@ejemplo.com'),
+('Hugo Morales', 'hugo.morales@ejemplo.com'),
+('Silvia Ramírez', 'silvia.ramirez@ejemplo.com'),
+('Ricardo García', 'ricardo.garcia@ejemplo.com'),
+('Andrea López', 'andrea.lopez@ejemplo.com'),
+('Martín Herrera', 'martin.herrera@ejemplo.com'),
+('Natalia Salazar', 'natalia.salazar@ejemplo.com'),
+('Alberto Torres', 'alberto.torres@ejemplo.com'),
+('Verónica Guzmán', 'veronica.guzman@ejemplo.com'),
+('Leonardo Vargas', 'leonardo.vargas@ejemplo.com'),
+('Patricia Romero', 'patricia.romero@ejemplo.com'),
+('Carlos Arias', 'carlos.arias@ejemplo.com'),
+('Gabriela Mendoza', 'gabriela.mendoza@ejemplo.com'),
+('Julián Díaz', 'julian.diaz@ejemplo.com'),
+('Fernando Muñoz', 'fernando.munoz@ejemplo.com'),
+('Sonia Castro', 'sonia.castro@ejemplo.com'),
+('Luis Alvarado', 'luis.alvarado@ejemplo.com'),
+('Olga Rojas', 'olga.rojas@ejemplo.com'),
+('Adriana Silva', 'adriana.silva@ejemplo.com'),
+('Camilo León', 'camilo.leon@ejemplo.com'),
+('Inés Ruiz', 'ines.ruiz@ejemplo.com'),
+('Diego Pérez', 'diego.perez@ejemplo.com'),
+('Patricia Carrillo', 'patricia.carrillo@ejemplo.com'),
+('Esteban Becerra', 'esteban.becerra@ejemplo.com'),
+('Lina Valdés', 'lina.valdes@ejemplo.com'),
+('Felipe Cordero', 'felipe.cordero@ejemplo.com'),
+('Joaquín Acevedo', 'joaquin.acevedo@ejemplo.com'),
+('Cristina Barrera', 'cristina.barrera@ejemplo.com'),
+('Santiago Vargas', 'santiago.vargas@ejemplo.com'),
+('Mónica Morales', 'monica.morales@ejemplo.com'),
+('Rafael Gómez', 'rafael.gomez@ejemplo.com'),
+('Sofía Reyes', 'sofia.reyes@ejemplo.com'),
+('Marta Aguirre', 'marta.aguirre@ejemplo.com'),
+('Antonio Calderón', 'antonio.calderon@ejemplo.com'),
+('Silvana Castro', 'silvana.castro@ejemplo.com'),
+('Ricardo Zapata', 'ricardo.zapata@ejemplo.com'),
+('Gabriel Hurtado', 'gabriel.hurtado@ejemplo.com'),
+('Angélica Mena', 'angelica.mena@ejemplo.com'),
+('Hernán González', 'hernan.gonzalez@ejemplo.com'),
+('Beatriz Torres', 'beatriz.torres@ejemplo.com'),
+('Emilio Pineda', 'emilio.pineda@ejemplo.com'),
+('Verónica Ríos', 'veronica.rios@ejemplo.com'),
+('Felipe Ruiz', 'felipe.ruiz@ejemplo.com'),
+('Leonardo Salinas', 'leonardo.salinas@ejemplo.com'),
+('Patricia Cuervo', 'patricia.cuervo@ejemplo.com'),
+('Hugo Muñoz', 'hugo.munoz@ejemplo.com'),
+('Margarita Díaz', 'margarita.diaz@ejemplo.com'),
+('Julián Cardona', 'julian.cardona@ejemplo.com');
+
+INSERT INTO Laboratorio (idLaboratorio, nombreLaboratorio, capacidad, ubicacion, estadoLaboratorio) 
+VALUES
+(1, 'Laboratorio de Química', 30, 'Edificio A', TRUE),
+(2, 'Laboratorio de Física', 20, 'Edificio B', TRUE),
+(3, 'Laboratorio de Biología', 25, 'Edificio C', TRUE),
+(4, 'Laboratorio de Matemáticas', 15, 'Edificio D', TRUE),
+(5, 'Laboratorio de Informática', 40, 'Edificio E', TRUE),
+(6, 'Laboratorio de Electrónica', 20, 'Edificio F', TRUE),
+(7, 'Laboratorio de Ingeniería', 30, 'Edificio G', TRUE),
+(8, 'Laboratorio de Diseño', 20, 'Edificio H', TRUE),
+(9, 'Laboratorio de Robótica', 15, 'Edificio I', TRUE),
+(10, 'Laboratorio de Materiales', 25, 'Edificio J', TRUE),
+(11, 'Laboratorio de Energías Renovables', 30, 'Edificio K', TRUE),
+(12, 'Laboratorio de Microbiología', 10, 'Edificio L', TRUE),
+(13, 'Laboratorio de Geología', 25, 'Edificio M', TRUE),
+(14, 'Laboratorio de Física Aplicada', 20, 'Edificio N', TRUE),
+(15, 'Laboratorio de Química Orgánica', 30, 'Edificio O', TRUE),
+(16, 'Laboratorio de Química Inorgánica', 25, 'Edificio P', TRUE),
+(17, 'Laboratorio de Química Analítica', 30, 'Edificio Q', TRUE),
+(18, 'Laboratorio de Química Ambiental', 20, 'Edificio R', TRUE),
+(19, 'Laboratorio de Biotecnología', 30, 'Edificio S', TRUE),
+(20, 'Laboratorio de Nanotecnología', 25, 'Edificio T', TRUE),
+(21, 'Laboratorio de Sistemas de Control', 20, 'Edificio U', TRUE),
+(22, 'Laboratorio de Ingeniería de Software', 15, 'Edificio V', TRUE),
+(23, 'Laboratorio de Hardware', 30, 'Edificio W', TRUE),
+(24, 'Laboratorio de Telecomunicaciones', 25, 'Edificio X', TRUE),
+(25, 'Laboratorio de Análisis de Datos', 40, 'Edificio Y', TRUE),
+(26, 'Laboratorio de Programación', 20, 'Edificio Z', TRUE),
+(27, 'Laboratorio de Redes', 30, 'Edificio AA', TRUE),
+(28, 'Laboratorio de Seguridad Informática', 15, 'Edificio AB', TRUE),
+(29, 'Laboratorio de Ingeniería Ambiental', 25, 'Edificio AC', TRUE),
+(30, 'Laboratorio de Física Teórica', 30, 'Edificio AD', TRUE),
+(31, 'Laboratorio de Matemáticas Aplicadas', 20, 'Edificio AE', TRUE),
+(32, 'Laboratorio de Química Física', 25, 'Edificio AF', TRUE),
+(33, 'Laboratorio de Ciencias de la Computación', 30, 'Edificio AG', TRUE),
+(34, 'Laboratorio de Física Experimental', 15, 'Edificio AH', TRUE),
+(35, 'Laboratorio de Ingeniería de Sistemas', 25, 'Edificio AI', TRUE),
+(36, 'Laboratorio de Química de Alimentos', 30, 'Edificio AJ', TRUE),
+(37, 'Laboratorio de Bioquímica', 20, 'Edificio AK', TRUE),
+(38, 'Laboratorio de Química Forense', 25, 'Edificio AL', TRUE),
+(39, 'Laboratorio de Energía y Sostenibilidad', 30, 'Edificio AM', TRUE),
+(40, 'Laboratorio de Ciencias Sociales', 20, 'Edificio AN', TRUE),
+(41, 'Laboratorio de Ingeniería de Transportes', 15, 'Edificio AO', TRUE),
+(42, 'Laboratorio de Física Computacional', 30, 'Edificio AP', TRUE),
+(43, 'Laboratorio de Química Medicinal', 25, 'Edificio AQ', TRUE),
+(44, 'Laboratorio de Ingeniería en Telecomunicaciones', 20, 'Edificio AR', TRUE),
+(45, 'Laboratorio de Aplicaciones Móviles', 15, 'Edificio AS', TRUE),
+(46, 'Laboratorio de Sistemas Embebidos', 30, 'Edificio AT', TRUE),
+(47, 'Laboratorio de Energía Alternativa', 25, 'Edificio AU', TRUE),
+(48, 'Laboratorio de Tecnología Ambiental', 20, 'Edificio AV', TRUE),
+(49, 'Laboratorio de Ingeniería Biomédica', 15, 'Edificio AW', TRUE),
+(50, 'Laboratorio de Simulación', 25, 'Edificio AX', TRUE);
+
+
+
+-- Consulta básica: Obtener todos los registros de la tabla Usuario
+SELECT * FROM Usuariosistema;
+SELECT * FROM Administrador;
+SELECT * FROM Laboratorio;
+select * from Reserva;
+
+#Seleccionar usuarios activos
+SELECT * FROM Usuariosistema WHERE estadoUsuario = TRUE;
+
+#Contar el número total de usuarios
+SELECT COUNT(*) AS totalUsuarios FROM Usuariosistema;
+
+#Listar las reservas de un usuario específico
+SELECT * FROM Reserva WHERE idUsuarioFK = 1;
+
+#Obtener detalles de laboratorios con capacidad mayor a 25
+SELECT * FROM Laboratorio WHERE capacidad > 25;
+
+#Contar el número de reservas por laboratorio
+SELECT idLaboratorioFK, COUNT(*) AS totalReservas 
+FROM Reserva 
+GROUP BY idLaboratorioFK;
+
+#Encontrar todos los usuarios que tienen reservas en un laboratorio específico
+SELECT U.nombreUsuario 
+FROM Usuariosistema U
+JOIN Reserva R ON U.idUsuario = R.idUsuarioFK
+WHERE R.idLaboratorioFK = 1;
+
+#Listar las reservas con fecha específica 
+SELECT * FROM Reserva WHERE fechaReserva = '2024-10-10';
+
+#Actualizar el correo de un usuario específico
+UPDATE Usuariosistema SET correo = 'nuevo.correo@ejemplo.com' WHERE idUsuario = 1;
+
+#Cambiar el estado de un usuario de activo a inactivo
+UPDATE Usuariosistema SET estadoUsuario = FALSE WHERE idUsuario = 2;
+
+#Modificar la capacidad de un laboratorio
+UPDATE Laboratorio SET capacidad = 35 WHERE idLaboratorio = 1;
+
+#Actualizar el nombre de un laboratorio
+UPDATE Laboratorio SET nombreLaboratorio = 'Nuevo Nombre de Laboratorio' WHERE idLaboratorio = 2;
+
+#Modificar la fecha de una reserva
+UPDATE Reserva SET fechaReserva = '2024-11-10' WHERE idReserva = 1;
+
+#Eliminar un usuario específico
+DELETE FROM Usuariosistema WHERE idUsuario = 3;
+
+#Obtener información de usuarios y sus reservas
+SELECT U.nombreUsuario, R.fechaReserva, R.horaInicio, R.horaFin 
+FROM Usuariosistema U
+JOIN Reserva R ON U.idUsuario = R.idUsuarioFK;
+
+#Encontrar laboratorios que tienen reservas activas
+SELECT * 
+FROM Laboratorio 
+WHERE idLaboratorio IN (
+    SELECT idLaboratorioFK 
+    FROM Reserva 
+    WHERE estadoReserva = TRUE
+);
+
+#Crear un procedimiento para agregar una nueva reserva
+DELIMITER $$
+
+CREATE PROCEDURE agregarReserva(
+    IN p_idUsuario INT,
+    IN p_idLaboratorio INT,
+    IN p_fechaReserva DATE,
+    IN p_horaInicio TIME,
+    IN p_horaFin TIME
+)
+BEGIN
+    INSERT INTO Reserva (idUsuarioFK, idLaboratorioFK, fechaReserva, horaInicio, horaFin, estadoReserva)
+    VALUES (p_idUsuario, p_idLaboratorio, p_fechaReserva, p_horaInicio, p_horaFin, TRUE);
+END$$
+
+DELIMITER ;
+
+#Crear una vista para mostrar todas las reservas activas con información de usuario
+CREATE VIEW ReservasActivas AS
+SELECT U.nombreUsuario, R.fechaReserva, R.horaInicio, R.horaFin 
+FROM Usuariosistema U
+JOIN Reserva R ON U.idUsuario = R.idUsuarioFK
+WHERE R.estadoReserva = TRUE;
