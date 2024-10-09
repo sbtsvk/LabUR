@@ -1,5 +1,6 @@
 -- Crear la base de datos
 CREATE DATABASE sistema_reservas;
+DROP DATABASE sistema_reservas;
 -- Usar la base de datos
 USE sistema_reservas;
 
@@ -22,8 +23,7 @@ CREATE TABLE Laboratorio (
 );
 
 -- Crear la tabla Reserva
-CREATE TABLE Reserva
-(
+CREATE TABLE Reserva (
     idReserva INT PRIMARY KEY AUTO_INCREMENT,
     idUsuarioFK INT,
     idLaboratorioFK INT,
@@ -31,14 +31,14 @@ CREATE TABLE Reserva
     horaInicio TIME,
     horaFin TIME,
     estadoReserva BOOLEAN,
-    FOREIGN KEY (idUsuarioFK) REFERENCES Usuariosistema(idUsuario),
-    FOREIGN KEY (idLaboratorioFK) REFERENCES Laboratorio(idLaboratorio)
-    
+    FOREIGN KEY (idUsuarioFK)
+        REFERENCES Usuariosistema (idUsuario),
+    FOREIGN KEY (idLaboratorioFK)
+        REFERENCES Laboratorio (idLaboratorio)
 );
 
 -- Crear la tabla Administrador
-CREATE TABLE Administrador
-(
+CREATE TABLE Administrador (
     idAdministrador INT PRIMARY KEY AUTO_INCREMENT,
     nombreAdministrador VARCHAR(50) NOT NULL,
     correo VARCHAR(100) NOT NULL
@@ -309,7 +309,10 @@ UPDATE Laboratorio SET nombreLaboratorio = 'Nuevo Nombre de Laboratorio' WHERE i
 UPDATE Reserva SET fechaReserva = '2024-11-10' WHERE idReserva = 1;
 
 #Eliminar un usuario especÃ­fico
-DELETE FROM Usuariosistema WHERE idUsuario = 3;
+
+DELETE FROM Reserva WHERE idUsuarioFK = 3;
+
+DELETE FROM usuariosistema WHERE idUsuario = 3;
 
 #Obtener informaciÃ³n de usuarios y sus reservas
 SELECT U.nombreUsuario, R.fechaReserva, R.horaInicio, R.horaFin 
@@ -343,8 +346,6 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
-
-#Crear un procedimiento que cancele una reserva
 CREATE PROCEDURE cancelarReserva(
     IN i INT
 )
