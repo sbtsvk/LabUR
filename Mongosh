@@ -1,0 +1,118 @@
+# LabUR
+Proyecto
+use TallerMongoDB
+switched to db TallerMongoDB
+db.createCollection ('usuario')
+{ ok: 1 }
+db.usuario.insertMany([{Nombre:'Juan Pérez',Edad:30,Correo:'juan.perez@urosario.edu.com'},{Nombre:'Ana López',Edad:25,Correo:' ana.lopez@ urosario.com'}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('672e0bb0f1a593a843489111'),
+    '1': ObjectId('672e0bb0f1a593a843489112')
+  }
+}
+db.usuario.insertOne({Nombre:'Luis Torres',Edad:35,Correo:'luis.torres@ urosario.com'})
+{
+  acknowledged: true,
+  insertedId: ObjectId('672e0c75f1a593a843489113')
+}
+db.usuario.find()
+{
+  _id: ObjectId('672e0bb0f1a593a843489111'),
+  Nombre: 'Juan Pérez',
+  Edad: 30,
+  Correo: 'juan.perez@urosario.edu.com'
+}
+{
+  _id: ObjectId('672e0bb0f1a593a843489112'),
+  Nombre: 'Ana López',
+  Edad: 25,
+  Correo: ' ana.lopez@ urosario.com'
+}
+{
+  _id: ObjectId('672e0c75f1a593a843489113'),
+  Nombre: 'Luis Torres',
+  Edad: 35,
+  Correo: 'luis.torres@ urosario.com'
+}
+db.usuario.findOne({Nombre:'Ana López'})
+{
+  _id: ObjectId('672e0bb0f1a593a843489112'),
+  Nombre: 'Ana López',
+  Edad: 25,
+  Correo: ' ana.lopez@ urosario.com'
+}
+db.usuario.findOne({Edad>'Ana López'})
+SyntaxError: Unexpected token, expected "," (1:24)
+
+> 1 | db.usuario.findOne({Edad>'Ana López'})
+    |                         ^
+db.usuario.findOne({Edad>=30})
+SyntaxError: Unexpected token, expected "," (1:24)
+
+> 1 | db.usuario.findOne({Edad>=30})
+    |                         ^
+db.usuario.find({age:{$gte:30}})
+db.usuario.find({Edad:{$gte:30}})
+{
+  _id: ObjectId('672e0bb0f1a593a843489111'),
+  Nombre: 'Juan Pérez',
+  Edad: 30,
+  Correo: 'juan.perez@urosario.edu.com'
+}
+{
+  _id: ObjectId('672e0c75f1a593a843489113'),
+  Nombre: 'Luis Torres',
+  Edad: 35,
+  Correo: 'luis.torres@ urosario.com'
+}
+db.usuario.updateOne({Nombre:'Juan Pérez',{$set:{Edad:31}}})
+SyntaxError: Unexpected token (1:42)
+
+> 1 | db.usuario.updateOne({Nombre:'Juan Pérez',{$set:{Edad:31}}})
+    |                                           ^
+db.usuario.updateOne({Nombre:'Juan Pérez'},{$set:{Edad:31}}})
+SyntaxError: Unexpected token, expected "," (1:59)
+
+> 1 | db.usuario.updateOne({Nombre:'Juan Pérez'},{$set:{Edad:31}}})
+    |                                                            ^
+db.usuario.updateOne({Nombre:'Juan Pérez'},{$set:{Edad:31}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+db.usuario.findOne({Edad>'Juan Pérez'})
+SyntaxError: Unexpected token, expected "," (1:24)
+
+> 1 | db.usuario.findOne({Edad>'Juan Pérez'})
+    |                         ^
+db.usuario.findOne({Nombre:'Juan Pérez'})
+{
+  _id: ObjectId('672e0bb0f1a593a843489111'),
+  Nombre: 'Juan Pérez',
+  Edad: 31,
+  Correo: 'juan.perez@urosario.edu.com'
+}
+db.usuario.updateMany({Edad:{$gte:30},{$set:{Activo:true}})
+SyntaxError: Unexpected token (1:38)
+
+> 1 | db.usuario.updateMany({Edad:{$gte:30},{$set:{Activo:true}})
+    |                                       ^
+db.usuario.updateMany({Edad:{$gte:30},{$set:{Activo:true}}})
+SyntaxError: Unexpected token (1:38)
+
+> 1 | db.usuario.updateMany({Edad:{$gte:30},{$set:{Activo:true}}})
+    |                                       ^
+db.usuario.updateMany({Edad:{$gte:30}},{$set:{Activo:true}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+TallerMongoDB
