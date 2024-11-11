@@ -1,0 +1,77 @@
+
+se llama sistema reserva ya que en si lo que tenemos que hacer en java es el sistema ya como tal 
+
+use sistema_reservas;
+y hice 40 usuarios ya que no se me ocurrieron mas nombres xd 
+db.usuarios.insertMany([
+  { "_id": 1, "nombreUsuario": "Juan Pérez", "tipoUsuario": "Estudiante", "correo": "juan.perez@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 2, "nombreUsuario": "Maria Gómez", "tipoUsuario": "Docente", "correo": "maria.gomez@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 3, "nombreUsuario": "Carlos Torres", "tipoUsuario": "Estudiante", "correo": "carlos.torres@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 4, "nombreUsuario": "Ana Sánchez", "tipoUsuario": "Estudiante", "correo": "ana.sanchez@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 5, "nombreUsuario": "Luis Hernández", "tipoUsuario": "Docente", "correo": "luis.hernandez@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 6, "nombreUsuario": "Elena Martínez", "tipoUsuario": "Estudiante", "correo": "elena.martinez@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 7, "nombreUsuario": "Javier Ruiz", "tipoUsuario": "Estudiante", "correo": "javier.ruiz@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 8, "nombreUsuario": "Sofía Castro", "tipoUsuario": "Estudiante", "correo": "sofia.castro@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 9, "nombreUsuario": "Fernando López", "tipoUsuario": "Docente", "correo": "fernando.lopez@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 10, "nombreUsuario": "Gabriela Ramírez", "tipoUsuario": "Estudiante", "correo": "gabriela.ramirez@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 11, "nombreUsuario": "David Romero", "tipoUsuario": "Estudiante", "correo": "david.romero@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 12, "nombreUsuario": "Valentina Ríos", "tipoUsuario": "Estudiante", "correo": "valentina.rios@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 13, "nombreUsuario": "Cristian Díaz", "tipoUsuario": "Estudiante", "correo": "cristian.diaz@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 14, "nombreUsuario": "Nicolás Torres", "tipoUsuario": "Docente", "correo": "nicolas.torres@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 15, "nombreUsuario": "Laura Morales", "tipoUsuario": "Estudiante", "correo": "laura.morales@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 16, "nombreUsuario": "Pablo Silva", "tipoUsuario": "Estudiante", "correo": "pablo.silva@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 17, "nombreUsuario": "Camila Ortega", "tipoUsuario": "Estudiante", "correo": "camila.ortega@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 18, "nombreUsuario": "Ricardo Jiménez", "tipoUsuario": "Estudiante", "correo": "ricardo.jimenez@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 19, "nombreUsuario": "Andrés Cordero", "tipoUsuario": "Docente", "correo": "andres.cordero@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 20, "nombreUsuario": "María Clara", "tipoUsuario": "Estudiante", "correo": "maria.clara@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 21, "nombreUsuario": "José Medina", "tipoUsuario": "Estudiante", "correo": "jose.medina@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 22, "nombreUsuario": "Natalia Castillo", "tipoUsuario": "Estudiante", "correo": "natalia.castillo@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 23, "nombreUsuario": "Álvaro Paredes", "tipoUsuario": "Docente", "correo": "alvaro.paredes@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 24, "nombreUsuario": "Diego Salazar", "tipoUsuario": "Estudiante", "correo": "diego.salazar@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 25, "nombreUsuario": "Rosa Flores", "tipoUsuario": "Estudiante", "correo": "rosa.flores@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 26, "nombreUsuario": "Camilo Vega", "tipoUsuario": "Estudiante", "correo": "camilo.vega@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 27, "nombreUsuario": "Julián Arévalo", "tipoUsuario": "Docente", "correo": "julian.arevalo@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 28, "nombreUsuario": "Teresa López", "tipoUsuario": "Estudiante", "correo": "teresa.lopez@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 29, "nombreUsuario": "Gustavo León", "tipoUsuario": "Estudiante", "correo": "gustavo.leon@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 30, "nombreUsuario": "Mariana Zamora", "tipoUsuario": "Estudiante", "correo": "mariana.zamora@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 31, "nombreUsuario": "Ricardo González", "tipoUsuario": "Estudiante", "correo": "ricardo.gonzalez@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 32, "nombreUsuario": "Claudia Hernández", "tipoUsuario": "Docente", "correo": "claudia.hernandez@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 33, "nombreUsuario": "Santiago Acevedo", "tipoUsuario": "Estudiante", "correo": "santiago.acevedo@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 34, "nombreUsuario": "Lucía Mejía", "tipoUsuario": "Estudiante", "correo": "lucia.mejia@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 35, "nombreUsuario": "Hugo Pineda", "tipoUsuario": "Estudiante", "correo": "hugo.pineda@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 36, "nombreUsuario": "Paola Torres", "tipoUsuario": "Estudiante", "correo": "paola.torres@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 37, "nombreUsuario": "Pedro Rivas", "tipoUsuario": "Docente", "correo": "pedro.rivas@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 38, "nombreUsuario": "Valeria Torres", "tipoUsuario": "Estudiante", "correo": "valeria.torres@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 39, "nombreUsuario": "Cristina Barrera", "tipoUsuario": "Estudiante", "correo": "cristina.barrera@ejemplo.com", "estadoUsuario": 1 },
+  { "_id": 40, "nombreUsuario": "Mauro Ortiz", "tipoUsuario": "Estudiante", "correo": "mauro.ortiz@ejemplo.com", "estadoUsuario": 1 }
+]);
+hice los ocho laboratorios que fue una de las condiciones que nos pidio la profe que cambiaramos ya que no son 50
+db.laboratorios.insertMany([
+  { "_id": 1, "nombreLaboratorio": "Laboratorio de Química", "capacidad": 30, "ubicacion": "Edificio A", "estadoLaboratorio": 1, "idAdministradorFK": 1 },
+  { "_id": 2, "nombreLaboratorio": "Laboratorio de Física", "capacidad": 20, "ubicacion": "Edificio B", "estadoLaboratorio": 1, "idAdministradorFK": 2 },
+  { "_id": 3, "nombreLaboratorio": "Laboratorio de Biología", "capacidad": 25, "ubicacion": "Edificio C", "estadoLaboratorio": 1, "idAdministradorFK": 1 },
+  { "_id": 4, "nombreLaboratorio": "Laboratorio de Matemáticas", "capacidad": 15, "ubicacion": "Edificio D", "estadoLaboratorio": 1, "idAdministradorFK": 2 },
+  { "_id": 5, "nombreLaboratorio": "Laboratorio de Química", "capacidad": 35, "ubicacion": "Edificio A", "estadoLaboratorio": 1, "idAdministradorFK": 1 },
+  { "_id": 6, "nombreLaboratorio": "Laboratorio de Física", "capacidad": 10, "ubicacion": "Edificio B", "estadoLaboratorio": 1, "idAdministradorFK": 2 },
+  { "_id": 7, "nombreLaboratorio": "Laboratorio de Biología", "capacidad": 5, "ubicacion": "Edificio C", "estadoLaboratorio": 1, "idAdministradorFK": 1 },
+  { "_id": 8, "nombreLaboratorio": "Laboratorio de Matemáticas", "capacidad": 25, "ubicacion": "Edificio D", "estadoLaboratorio": 1, "idAdministradorFK": 2 }
+]);
+hice la prueba con pocas reservas ya que no era necesario
+db.reservas.insertMany([
+  { "_id": 1, "idUsuarioFK": 1, "idLaboratorioFK": 1, "fechaReserva": "2024-10-10", "horaInicio": "08:00", "horaFin": "10:00", "estadoReserva": 1 },
+  { "_id": 2, "idUsuarioFK": 2, "idLaboratorioFK": 2, "fechaReserva": "2024-10-11", "horaInicio": "10:00", "horaFin": "12:00", "estadoReserva": 1 },
+  { "_id": 3, "idUsuarioFK": 3, "idLaboratorioFK": 3, "fechaReserva": "2024-10-12", "horaInicio": "13:00", "horaFin": "15:00", "estadoReserva": 1 },
+  { "_id": 4, "idUsuarioFK": 1, "idLaboratorioFK": 4, "fechaReserva": "2024-10-13", "horaInicio": "09:00", "horaFin": "11:00", "estadoReserva": 1 }
+ 
+]);
+este es el de administradores donde solo puse dos por que no hacen falta mas 
+db.administradores.insertMany([
+  { "_id": 1, "nombreAdministrador": "Laura Martínez", "correo": "laura.martinez@ejemplo.com" },
+  { "_id": 2, "nombreAdministrador": "Pedro Sánchez", "correo": "pedro.sanchez@ejemplo.com" }
+]);
+
+estas son pruebas para saber si todo funciono 
+db.usuarios.find().pretty();
+db.laboratorios.find().pretty();
+db.reservas.find().pretty();
+db.administradores.find().pretty();
