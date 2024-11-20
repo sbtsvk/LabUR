@@ -1,0 +1,167 @@
+# LabUR
+Proyecto
+use Tienda_musica
+switched to db Tienda_musica
+await db.createCollection('Artistas');
+SyntaxError: 'await' is only allowed within async functions and at the top levels of modules. (1:0)
+
+> 1 | await db.createCollection('Artistas');
+    | ^
+ db.createCollection('Artistas');
+{ ok: 1 }
+db.createCollection('Albunes');
+{ ok: 1 }
+db.Collection('Artistas').insertMany([{nombre:'Taylor swift',genero:'Pop',pais:'Estados unidos'},{nombre:'The beatles',genero:'Rock',pais:'Reino unido'},{nombre:'Shakira',genero:'Latino',pais:'Colombia'}]);
+TypeError: db.Collection is not a function
+db.('Artistas').insertMany([{nombre:'Taylor swift',genero:'Pop',pais:'Estados unidos'},{nombre:'The beatles',genero:'Rock',pais:'Reino unido'},{nombre:'Shakira',genero:'Latino',pais:'Colombia'}]);
+SyntaxError: Unexpected token (1:3)
+
+> 1 | db.('Artistas').insertMany([{nombre:'Taylor swift',genero:'Pop',pais:'Estados unidos'},{nombre:'The beatles',genero:'Rock',pais:'Reino unido'},{nombre:'Shakira',genero:'Latino',pais:'Colombia'}]);
+    |    ^
+  2 |
+db.Artistas.insertMany([{nombre1:'Taylor swift',genero1:'Pop',pais1:'Estados unidos'},{nombre2:'The beatles',genero2:'Rock',pais2:'Reino unido'},{nombre3:'Shakira',genero3:'Latino',pais3:'Colombia'}]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('673dda7fc0633d4913da65cd'),
+    '1': ObjectId('673dda7fc0633d4913da65ce'),
+    '2': ObjectId('673dda7fc0633d4913da65cf')
+  }
+}
+db.Artistas.insertMany([{nombre1:'Taylor swift',genero1:'Pop',pais1:'Estados unidos'},{nombre2:'The beatles',genero2:'Rock',pais2:'Reino unido'},{nombre3:'Shakira',genero3:'Latino',pais3:'Colombia'}]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('673ddafec0633d4913da65d0'),
+    '1': ObjectId('673ddafec0633d4913da65d1'),
+    '2': ObjectId('673ddafec0633d4913da65d2')
+  }
+}
+db.Artistas.insertMany([{nombre1:'Taylor swift',genero1:'Pop',pais1:'Estados unidos'}	,{nombre2:'The beatles',genero2:'Rock',pais2:'Reino unido'},{nombre3:'Shakira',genero3:'Latino',pais3:'Colombia'}]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('673ddb21c0633d4913da65d3'),
+    '1': ObjectId('673ddb21c0633d4913da65d4'),
+    '2': ObjectId('673ddb21c0633d4913da65d5')
+  }
+}
+db.Albunes.insertMany([
+{nombreAlbun:1989,nombre1:'Taylor swift',año:2014},
+{nombreAlbun:'Abbey road',nombre2:'The beatles',año:1969},
+{nombreAlbun:'El dorado',nombre3:'Shakira',año:2017}
+]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('673ddd32c0633d4913da65d6'),
+    '1': ObjectId('673ddd32c0633d4913da65d7'),
+    '2': ObjectId('673ddd32c0633d4913da65d8')
+  }
+}
+const resultados = await db.Artistas.find().toArray();
+SyntaxError: 'await' is only allowed within async functions and at the top levels of modules. (1:19)
+
+> 1 | const resultados = await db.Artistas.find().toArray();
+    |                    ^
+db.Collection.Artistas();
+TypeError: db.Collection.Artistas is not a function
+db.Artistas.find();
+{
+  _id: ObjectId('673dda7fc0633d4913da65cd'),
+  nombre1: 'Taylor swift',
+  genero1: 'Pop',
+  pais1: 'Estados unidos'
+}
+{
+  _id: ObjectId('673dda7fc0633d4913da65ce'),
+  nombre2: 'The beatles',
+  genero2: 'Rock',
+  pais2: 'Reino unido'
+}
+{
+  _id: ObjectId('673dda7fc0633d4913da65cf'),
+  nombre3: 'Shakira',
+  genero3: 'Latino',
+  pais3: 'Colombia'
+}
+{
+  _id: ObjectId('673ddafec0633d4913da65d0'),
+  nombre1: 'Taylor swift',
+  genero1: 'Pop',
+  pais1: 'Estados unidos'
+}
+{
+  _id: ObjectId('673ddafec0633d4913da65d1'),
+  nombre2: 'The beatles',
+  genero2: 'Rock',
+  pais2: 'Reino unido'
+}
+{
+  _id: ObjectId('673ddafec0633d4913da65d2'),
+  nombre3: 'Shakira',
+  genero3: 'Latino',
+  pais3: 'Colombia'
+}
+{
+  _id: ObjectId('673ddb21c0633d4913da65d3'),
+  nombre1: 'Taylor swift',
+  genero1: 'Pop',
+  pais1: 'Estados unidos'
+}
+{
+  _id: ObjectId('673ddb21c0633d4913da65d4'),
+  nombre2: 'The beatles',
+  genero2: 'Rock',
+  pais2: 'Reino unido'
+}
+{
+  _id: ObjectId('673ddb21c0633d4913da65d5'),
+  nombre3: 'Shakira',
+  genero3: 'Latino',
+  pais3: 'Colombia'
+}
+db.Albunes.findOne({nombre3:'Shakira'})
+{
+  _id: ObjectId('673ddd32c0633d4913da65d8'),
+  nombreAlbun: 'El dorado',
+  nombre3: 'Shakira',
+  'año': 2017
+}
+db.Artistas.findOne({genero:'Rock'})
+null
+db.Albunes.find({año:($gte:2000)})
+SyntaxError: Unexpected token, expected "," (1:26)
+
+> 1 | db.Albunes.find({año:($gte:2000)})
+    |                           ^
+db.Albunes.find({año:{$gte:2000}})
+{
+  _id: ObjectId('673ddd32c0633d4913da65d6'),
+  nombreAlbun: 1989,
+  nombre1: 'Taylor swift',
+  'año': 2014
+}
+{
+  _id: ObjectId('673ddd32c0633d4913da65d8'),
+  nombreAlbun: 'El dorado',
+  nombre3: 'Shakira',
+  'año': 2017
+}
+db.Artistas.updateOne({pais:'colombia'{$set:{pais:'España'}}})
+SyntaxError: Unexpected token, expected "," (1:38)
+
+> 1 | db.Artistas.updateOne({pais:'colombia'{$set:{pais:'España'}}})
+    |                                       ^
+db.Artistas.updateOne({pais:'colombia'},{$set:{pais:'España'}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+Tienda_musica
+Selection deleted
+
+
