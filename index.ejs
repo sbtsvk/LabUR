@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Usuarios</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <h2>Crear Nuevo Usuario</h2>
+    <form action="/usuariosistema" method="POST">
+      <label for="nombreUsuario">Nombre de Usuario:</label>
+      <input type="text" id="nombreUsuario" name="nombreUsuario" required><br><br>
+    
+      <label for="tipoUsuario">Tipo de Usuario:</label>
+      <input type="text" id="tipoUsuario" name="tipoUsuario" required><br><br>
+    
+      <label for="correo">Correo:</label>
+      <input type="email" id="correo" name="correo" required><br><br>
+    
+      <label for="estadoUsuario">Estado:</label>
+      <select id="estadoUsuario" name="estadoUsuario">
+        <option value="true">Activo</option>
+        <option value="false">Inactivo</option>
+      </select><br><br>
+    
+      <button type="submit">Crear Usuario</button>
+    </form>    
+
+    <h2>Lista de Usuarios</h2>
+    <table border="1" id="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Foto</th>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Tipo de Usuario</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% usuarios.forEach(function(usuario){ %>
+        <tr>
+          <td><%= usuario._id %></td>
+          <td>
+            <img
+              class="photo"
+              width="38"
+              src="https://ui-avatars.com/api/?name=<%= usuario.nombreUsuario %>?background=random"
+              alt="Foto de <%= usuario.nombreUsuario %>"
+            />
+          </td>
+          <td><%= usuario.nombreUsuario %></td>
+          <td><%= usuario.correo %></td>
+          <td><%= usuario.tipoUsuario %></td>
+          <td><%= usuario.estadoUsuario ? 'Activo' : 'Inactivo' %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </body>
+</html>
